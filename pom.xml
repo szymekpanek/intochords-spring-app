@@ -43,6 +43,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>clojure-interop</groupId>
+            <artifactId>javax.sound</artifactId>
+            <version>1.0.5</version>
+        </dependency>
     </dependencies>
 
     <build>
