@@ -35,11 +35,4 @@ public class IntochordsController {
         }
         return "interval-game";
     }
-
-    @GetMapping("/playSound")
-    public String playSoundButton (@RequestParam String note) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        intervalGameServices.playSound(note);
-        return "redirect:/interval-game";
-    }
-
 }

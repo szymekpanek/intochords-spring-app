@@ -2,21 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interval Game</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="/style/welcome-page-style/intervals-game-stylesheet.css">
 </head>
-<style>
-    body {
-        background-image: url('/images/bg.svg');
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-</style>
-
-
-<body>
+<body class="h-screen w-screen">
+<div class="fade-in">
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold text-center mb-8">List of Sounds</h1>
 
@@ -32,13 +23,15 @@
         <tr th:each="entry : ${sounds}">
             <td class="border px-4 py-2 m-0.5" th:text="${entry.key}"></td>
             <td>
-                <a th:href="@{/interval-game(note=${entry.key})}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                <a th:href="@{/interval-game(note=${entry.key})}"
+                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     Play
                 </a>
             </td>
         </tr>
         </tbody>
     </table>
+</div>
 </div>
 </body>
 </html>

@@ -58,7 +58,6 @@ public class IntervalGameServices {
         if (soundDB.getSoundMap().containsKey(note)) {
 
             File soundFileName = new File(soundDB.getSoundFileName(note));
-            System.out.println("Odtwarzam dźwięk: " + soundFileName);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFileName);
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
@@ -66,18 +65,4 @@ public class IntervalGameServices {
 
         } else System.out.println("Wrong note");
     }
-
-
-//    public void playSound(String fileName) {
-//        String filePath = "path/to/sounds/" + fileName + ".mp3"; // Ścieżka do plików dźwiękowych MP3
-//
-//        try {
-//            InputStream is = new BufferedInputStream(new FileInputStream(filePath));
-//            Player player = new Player(is);
-//            player.play();
-//        } catch (IOException | JavaLayerException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 }

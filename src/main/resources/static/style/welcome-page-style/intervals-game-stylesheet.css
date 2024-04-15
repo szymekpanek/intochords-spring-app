@@ -1,0 +1,16 @@
+body {
+    background-image: url('../../images/bg2.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+/* Dodajemy klasę .fade-in do elementów, które mają być animowane */
+.fade-in {
+    animation: fadeIn 2s ease-in forwards;
+}

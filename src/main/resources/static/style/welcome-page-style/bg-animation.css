@@ -1,0 +1,11 @@
+
+body {
+    background-image: url('../../images/bg1.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 1s ease-in-out;
+}
+
+.new-background {
+    background-image: url('../../images/bg2.svg');
+}

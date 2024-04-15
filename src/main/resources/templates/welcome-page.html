@@ -4,23 +4,20 @@
     <meta charset="UTF-8">
     <title>Intochords</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style/welcome-page-style/bg-animation.css">
 </head>
-<style>
-    body {
-        background-image: url('/images/bg.svg');
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-</style>
-
 <body>
-    <div class="flex justify-center items-center h-screen">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold mb-4">Welcome to Intochords</h1>
-            <p class="text-lg mb 4">The best place to learn music theory</p>
-            <a href="/interval-game" class="bg-white-500 hover:bg-whie-700 text-black font-bold py-2 px-4 rounded"> Intervals game</a>
-
-        </div>
+<div class="flex justify-center items-center h-screen">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold mb-4">Welcome to Intochords</h1>
+        <p class="text-lg mb-4">The best place to learn music theory</p>
+        <a href="/interval-game" id="change-background" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded">Intervals game</a>
     </div>
+</div>
+
+
+
+
+<script src="/script/bg-animation.js"></script>
 </body>
 </html>
