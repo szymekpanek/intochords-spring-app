@@ -4,22 +4,23 @@ package pl.wszib.edu.pl.intochordsspringapp.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import pl.wszib.edu.pl.intochordsspringapp.dao.IntervalDB;
 import pl.wszib.edu.pl.intochordsspringapp.services.IntervalGameServices;
-import pl.wszib.edu.pl.intochordsspringapp.services.SoundDB;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
-import java.util.Optional;
+import pl.wszib.edu.pl.intochordsspringapp.dao.SoundDB;
+
+import javax.swing.*;
 
 
 @Controller
 public class IntochordsController {
     private final SoundDB soundDB;
-    private IntervalGameServices intervalGameServices;
-    public IntochordsController (SoundDB soundDB, IntervalGameServices intervalGameServices){
+    private final IntervalDB intervalDB;
+
+
+    public IntochordsController (SoundDB soundDB, IntervalDB intervalDB){
         this.soundDB = soundDB;
-        this.intervalGameServices = intervalGameServices;
+        this.intervalDB = intervalDB;
+
     }
 
     @GetMapping("/")
@@ -28,11 +29,9 @@ public class IntochordsController {
     }
 
     @GetMapping("/interval-game")
-    public String intervals(Model model, @RequestParam(required = false) String note) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        model.addAttribute("sounds", soundDB.getSoundMap());
-        if (note != null) {
-            intervalGameServices.playSound(note);
-        }
+    public String intervals(Model model){
+        model.addAttribute("sounds", soundDB.getSounds());
+        model.addAttribute("intervals", intervalDB.getIntervalList());
         return "interval-game";
     }
 }

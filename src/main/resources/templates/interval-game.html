@@ -8,30 +8,59 @@
 </head>
 <body class="h-screen w-screen">
 <div class="fade-in">
-<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold text-center mb-8">List of Sounds</h1>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-center mb-8">List of Sounds</h1>
 
-    <table class="table-auto bg-white shadow-md center-table">
-        <thead>
-        <tr>
-            <th class="px-4 py-5">Key</th>
-            <th class="px-4 py-5">Action</th>
-        </tr>
-        </thead>
-        <tbody>
+        <table class="table-auto bg-white shadow-md center-table">
+            <thead>
+            <tr>
+                <th class="px-4 py-5">Key</th>
+                <th class="px-4 py-5">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sound, i : ${sounds}">
+                <td class="border px-4 py-2 m-0.5" th:text="${sound.getName()}"></td>
+                <td class="relative">
+                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded absolute top-1/2 transform -translate-y-1/2"
+                            onclick="playSound(this)" th:attr="data-sound-url=${sound.getPath()}">Play</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-        <tr th:each="entry : ${sounds}">
-            <td class="border px-4 py-2 m-0.5" th:text="${entry.key}"></td>
-            <td>
-                <a th:href="@{/interval-game(note=${entry.key})}"
-                   class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Play
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <div id="game-container">
+            <div id="table-container">
+                <table class="table-auto bg-white shadow-md center-table">
+                    <thead>
+                    <tr>
+                        <th class="">Interval Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="interval: ${intervals}">
+                        <td class="border px-4 py-2 m-0.5">
+                            <button th:text="${interval.getIntervalType()}"></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="game-buttons-container">
+                <button>Play interval</button>
+                <button>Check</button>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+<script>
+    function playSound(button) {
+        var soundUrl = button.getAttribute('data-sound-url');
+        var audio = new Audio(soundUrl);
+        audio.play();
+        console.log(soundUrl);
+    }
+</script>
 </body>
 </html>
