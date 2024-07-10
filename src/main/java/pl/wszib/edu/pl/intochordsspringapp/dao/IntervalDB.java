@@ -19,17 +19,17 @@ public class IntervalDB {
 
     public IntervalDB() {
         intervalList.add(new Interval("Unison", 0));
-        intervalList.add(new Interval("Minor Second", 1));
-        intervalList.add(new Interval("Major Second", 2));
-        intervalList.add(new Interval("Minor Third", 3));
-        intervalList.add(new Interval("Major Third", 4));
-        intervalList.add(new Interval("Perfect Fourth", 5));
-        intervalList.add(new Interval("Augmented Fourth / Diminished Fifth", 6));
-        intervalList.add(new Interval("Perfect Fifth", 7));
-        intervalList.add(new Interval("Minor Sixth", 8));
-        intervalList.add(new Interval("Major Sixth", 9));
-        intervalList.add(new Interval("Minor Seventh", 10));
-        intervalList.add(new Interval("Major Seventh", 11));
+        intervalList.add(new Interval("Minor 2nd", 1));
+        intervalList.add(new Interval("Major 2nd", 2));
+        intervalList.add(new Interval("Minor 3rd", 3));
+        intervalList.add(new Interval("Major 3rd", 4));
+        intervalList.add(new Interval("Perfect 4th", 5));
+        intervalList.add(new Interval("Tritone", 6));
+        intervalList.add(new Interval("Perfect 5th", 7));
+        intervalList.add(new Interval("Minor 6th", 8));
+        intervalList.add(new Interval("Major 6th", 9));
+        intervalList.add(new Interval("Minor 7th", 10));
+        intervalList.add(new Interval("Major 7th", 11));
         intervalList.add(new Interval("Octave", 12));
     }
 }

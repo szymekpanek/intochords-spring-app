@@ -1,12 +1,14 @@
 package pl.wszib.edu.pl.intochordsspringapp.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @Setter
+@AllArgsConstructor
 public class Interval {
-    private String intervalType;
-    private int degree;
+    private String name;
+    private int semitones;
 }
