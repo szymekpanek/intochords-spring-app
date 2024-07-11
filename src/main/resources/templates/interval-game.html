@@ -10,12 +10,6 @@
 <div class="container mx-auto px-4">
     <h1 class="text-4xl font-bold mb-4">Gra w interwały</h1>
 
-    <div class="grid grid-cols-3 gap-4">
-        <div th:each="interval : ${intervals}">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" th:text="${interval.name}" th:id="${interval.name}"></button>
-        </div>
-    </div>
-
     <div class="mt-8">
         <h2 class="text-2xl font-bold mb-2">Dźwięki do odtworzenia:</h2>
 
@@ -34,12 +28,31 @@
             <input type="range" min="0" max="1" step="0.01" id="volumeSlider" value="0.5">
         </div>
     </div>
+
 </div>
+
+<form id="myForm" action="/check" method="post" class="max-w-md mx-auto">
+    <div class="grid grid-cols-3 gap-4">
+        <div th:each="interval : ${intervals}">
+            <button type="button" th:id="${interval.name}" th:value="${interval.name}" class="interval-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" onclick="selectInterval(this)">
+                <span th:text="${interval.name}"></span>
+            </button>
+        </div>
+    </div>
+    <input type="hidden" id="userAnswer" name="userAnswer">
+    <button type="submit" id="submitAnswer" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 block w-full">
+        Sprawdź odpowiedź
+    </button>
+</form>
+
+<script>
+    function selectInterval(button) {
+        document.getElementById('userAnswer').value = button.value;
+    }
+</script>
+
+
 
 <script src="/script/interval/interval-game-play-sound.js"></script>
 </body>
 </html>
-
-
-
-

@@ -25,31 +25,46 @@ public class IntervalGameServices {
         return intervalDB.getIntervalList();
     }
 
-    private Optional<Interval> getRandomInterval (){
+    public Optional<Interval> getRandomInterval (){
         Random random = new Random();
         return intervalDB.getIntervalList().stream()
                 .skip(random.nextInt(intervalDB.getIntervalList().size()))
                 .findFirst();
     }
 
-    private Optional<Sound> getRandomSound(){
+    private Optional<Sound> getRandomSound() {
         Random random = new Random();
-        return soundDB.getSounds().stream()
-                .skip(random.nextInt(soundDB.getSounds().size()))
-                .findFirst();
+        List<Sound> sounds = soundDB.getSounds();
+
+        int limit = Math.min(12, sounds.size());
+        if (limit == 0) {
+            return Optional.empty();
+        }
+
+        int randomIndex = random.nextInt(limit);
+        return Optional.of(sounds.get(randomIndex));
     }
 
-    public List<Sound> findSoundsForRandomInterval() {
-        Optional<Interval> randomInterval = getRandomInterval();
+    public List<Sound> findSoundsForRandomInterval(Optional<Interval> randomInterval) {
         Optional<Sound> firstSound = getRandomSound();
 
         if (randomInterval.isPresent() && firstSound.isPresent()) {
-            Interval interval = randomInterval.get();
             Sound sound = firstSound.get();
 
-            int semitones = interval.getSemitones();
+            System.out.println("Interwał wylosowany w serwisach: " + randomInterval.get().getName());
+
+            int semitones = randomInterval.get().getSemitones();
+
+
+            System.out.println("Semitones: " + semitones);
+
             int firstSoundIndex = soundDB.getSounds().indexOf(sound);
             int secondSoundIndex = (firstSoundIndex + semitones) % soundDB.getSounds().size();
+
+            // Ensure the second index is positive
+            if (secondSoundIndex < 0) {
+                secondSoundIndex += soundDB.getSounds().size();
+            }
 
             Sound secondSound = soundDB.getSounds().get(secondSoundIndex);
 
@@ -57,9 +72,16 @@ public class IntervalGameServices {
             result.add(sound);
             result.add(secondSound);
 
+            System.out.println("Wylosowane dzwieki: " + sound.getName());
+            System.out.println("Wylosowane dzwieki: " + secondSound.getName());
+
             return result;
         }
         return new ArrayList<>();
+    }
+
+    public boolean checkAnswer(String answer, String randomInterval){
+        return randomInterval != null && randomInterval.equals(answer);
     }
 
 
