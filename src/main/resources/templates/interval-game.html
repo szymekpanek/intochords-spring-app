@@ -7,8 +7,15 @@
     <link href="/style/intervals-game-stylesheet.css" rel="stylesheet" >
 </head>
 <body>
+
+<div th:replace="/components/nav :: nav"></div>
+
+<br><br><br><br>
+
 <div class="container mx-auto px-4">
-    <h1 class="text-4xl font-bold mb-4">Interval Game</h1>
+    <div class="container mx-auto px-4 flex items-center justify-center">
+        <h1 class="text-4xl font-bold mb-4 text-white">Interval Game</h1>
+    </div>
 
     <div class="mt-8">
         <button id="playSounds" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play</button>
@@ -18,7 +25,7 @@
         <audio id="secondSound" th:src="@{${sounds[1].path}}" style="display: none;"></audio>
 
         <div class="mt-4">
-            <label for="volumeSlider" class="text-lg font-bold mb-2">Volume:</label>
+            <label for="volumeSlider" class="text-lg font-bold mb-2 text-white">Volume</label>
             <input type="range" min="0" max="1" step="0.01" id="volumeSlider" value="0.5">
         </div>
     </div>
@@ -36,7 +43,7 @@
 
     <input type="hidden" id="userAnswer" name="userAnswer">
 
-    <button type="submit" id="submitAnswer" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 block w-full" disabled>
+    <button type="submit" id="submitAnswer" class="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 block w-full" disabled>
         Check answer
     </button>
 
@@ -47,10 +54,6 @@
        th:class="${result == 'Correct' ? 'bg-green-500 mt-6 max-w-md mx-auto p-2 text-white text-center rounded-md' : 'bg-red-500 mt-6 max-w-md mx-auto p-2 text-white text-center rounded-md'}"
     ></p>
 </div>
-
-
-
-
 
 <script src="/script/interval/select-interval.js"></script>
 <script src="/script/interval/interval-game-play-sound.js"></script>
