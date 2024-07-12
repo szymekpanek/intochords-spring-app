@@ -22,7 +22,7 @@ import java.util.Optional;
 @Controller
 public class IntochordsController {
     private final IntervalGameServices intervalGameServices;
-    public IntochordsController (SoundDB soundDB, IntervalDB intervalDB, IntervalGameServices intervalGameServices){
+    public IntochordsController (IntervalGameServices intervalGameServices){
         this.intervalGameServices = intervalGameServices;
     }
 
@@ -44,8 +44,6 @@ public class IntochordsController {
         }
         return "interval-game";
     }
-
-
 
     @PostMapping("/check")
     public String checkAnswer(HttpSession httpSession, @RequestParam String userAnswer, Model model, RedirectAttributes redirectAttributes){
