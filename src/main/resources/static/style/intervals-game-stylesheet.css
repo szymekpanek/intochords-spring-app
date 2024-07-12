@@ -1,0 +1,37 @@
+body {
+    background-image: url('../images/bg2.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: background-image 3s ease-in-out;
+}
+
+.selected {
+    background-color: #1E3A8A !important;
+}
+
+.hidden {
+    display: none;
+}
+
+.result-correct {
+    background-color: #34D399; /* Zielony kolor tła dla poprawnej odpowiedzi */
+    font-size: 14px; /* Zmniejszenie rozmiaru czcionki */
+    padding: 8px; /* Zmniejszenie wewnętrznych marginesów */
+    max-width: 400px; /* Maksymalna szerokość komunikatu */
+    max-height: 100px;
+    margin: 0 auto; /* Automatyczne ustawienie marginesów (centralizacja komunikatu) */
+    margin-top: 100px;
+}
+
+.result-incorrect {
+    background-color: #EF4444; /* Czerwony kolor tła dla niepoprawnej odpowiedzi */
+    font-size: 14px; /* Zmniejszenie rozmiaru czcionki */
+    padding: 8px; /* Zmniejszenie wewnętrznych marginesów */
+    max-width: 400px; /* Maksymalna szerokość komunikatu */
+    max-height: 100px;
+    margin: 0 auto; /* Automatyczne ustawienie marginesów (centralizacja komunikatu) */
+    margin-top: 50px;
+
+}
+
+
