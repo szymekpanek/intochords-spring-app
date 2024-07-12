@@ -20,6 +20,6 @@ public class User {
     private String surname;
     private String login;
     private String password;
-    private int interval_answer_inc;
-    private int interval_answer_dec;
+    private Integer interval_answer_inc;
+    private Integer interval_answer_dec;
 }

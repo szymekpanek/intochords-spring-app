@@ -1,4 +1,4 @@
-package pl.wszib.edu.pl.intochordsspringapp.services;
+package pl.wszib.edu.pl.intochordsspringapp.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +82,10 @@ public class IntervalGameServices {
     public boolean checkAnswer(String answer, String randomInterval){
         return randomInterval != null && randomInterval.equals(answer);
     }
+
+
+
+
 
 
 }

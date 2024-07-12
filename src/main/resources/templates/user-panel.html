@@ -2,48 +2,53 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User List</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <title>User Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-<h1>User List</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Login</th>
-        <th>Password</th>
-        <th>Interval Answer Inc</th>
-        <th>Interval Answer Dec</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- Iteracja po liście użytkowników -->
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.surname}"></td>
-        <td th:text="${user.login}"></td>
-        <td th:text="${user.password}"></td>
-        <td th:text="${user.interval_answer_inc}"></td>
-        <td th:text="${user.interval_answer_dec}"></td>
-    </tr>
-    </tbody>
-</table>
+<body class="bg-gray-100">
+
+<div th:replace="~{/components/nav :: nav}"></div>
+
+<br><br><br><br><br><br><br><br>
+
+
+<div class="container mx-auto mt-16 p-6 bg-white rounded-lg shadow-lg">
+
+    <h1 class="text-3xl font-semibold mb-6 text-center">User Panel</h1>
+
+    <div class="mb-6 grid grid-cols-2 gap-4">
+        <div>
+            <p class="text-lg font-semibold"><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+            <p class="text-lg font-semibold"><strong>Surname:</strong> <span th:text="${user.surname}"></span></p>
+        </div>
+        <div>
+            <p class="text-lg font-semibold"><strong>Login:</strong> <span th:text="${user.login}"></span></p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-6">
+        <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+            <p class="text-lg font-semibold mb-2">Games won:</p>
+            <p class="text-4xl font-bold text-green-500"><span th:text="${user.interval_answer_inc}"></span></p>
+        </div>
+        <div class="bg-red-50 p-6 rounded-lg shadow-lg">
+            <p class="text-lg font-semibold mb-2">Games lost:</p>
+            <p class="text-4xl font-bold text-red-500"><span th:text="${user.interval_answer_dec}"></span></p>
+        </div>
+        <div class="col-span-2">
+            <canvas id="gameStatsChart" height="300"></canvas>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center">
+        <a href="/" class="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600">Back to Home</a>
+    </div>
+
+</div>
+
+<script src="/script/user/charts.js"></script>
 </body>
 </html>
