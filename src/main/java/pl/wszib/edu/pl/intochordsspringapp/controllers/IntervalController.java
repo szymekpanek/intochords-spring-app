@@ -1,6 +1,7 @@
 package pl.wszib.edu.pl.intochordsspringapp.controllers;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class IntervalController {
     private final IntervalGameServices intervalGameServices;
     private final UserDAO userDAO;
 
-
+    @Autowired
     public IntervalController(IntervalGameServices intervalGameServices, UserDAO userDAO) {
         this.intervalGameServices = intervalGameServices;
         this.userDAO = userDAO;
@@ -47,23 +48,21 @@ public class IntervalController {
                               RedirectAttributes redirectAttributes) {
 
         User loggedInUser = (User) httpSession.getAttribute(SessionConstants.USER_KEY);
-        if (loggedInUser == null) {
-            return "redirect:/login";
-        }
+        boolean isAuthenticated = loggedInUser != null;
 
         String randomInterval = (String) httpSession.getAttribute("randomInterval");
         boolean isCorrect = intervalGameServices.checkAnswer(userAnswer, randomInterval);
 
-        if (isCorrect) {
-            loggedInUser.setInterval_answer_inc(loggedInUser.getInterval_answer_inc() + 1);
+        if (isAuthenticated) {
+            if (isCorrect) {
+                loggedInUser.setInterval_answer_inc(loggedInUser.getInterval_answer_inc() + 1);
+            } else {
+                loggedInUser.setInterval_answer_dec(loggedInUser.getInterval_answer_dec() + 1);
+            }
             userDAO.save(loggedInUser);
-            redirectAttributes.addFlashAttribute("result", "Correct");
-        } else {
-            loggedInUser.setInterval_answer_dec(loggedInUser.getInterval_answer_dec() + 1);
-            userDAO.save(loggedInUser);
-            redirectAttributes.addFlashAttribute("result", "Not correct");
         }
 
+        redirectAttributes.addFlashAttribute("result", isCorrect ? "Correct" : "Not correct");
         httpSession.removeAttribute("randomInterval");
 
         return "redirect:/interval-game";

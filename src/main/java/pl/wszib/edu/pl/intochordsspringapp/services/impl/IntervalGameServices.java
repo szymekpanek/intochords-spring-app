@@ -51,13 +51,8 @@ public class IntervalGameServices {
         if (randomInterval.isPresent() && firstSound.isPresent()) {
             Sound sound = firstSound.get();
 
-            System.out.println("Interwał wylosowany w serwisach: " + randomInterval.get().getName());
-
+            System.out.println("Wylosowany interwal: " + randomInterval.get().getName());
             int semitones = randomInterval.get().getSemitones();
-
-
-            System.out.println("Semitones: " + semitones);
-
             int firstSoundIndex = soundDB.getSounds().indexOf(sound);
             int secondSoundIndex = (firstSoundIndex + semitones) % soundDB.getSounds().size();
 

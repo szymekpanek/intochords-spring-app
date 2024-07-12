@@ -37,31 +37,20 @@ public class IntochordsController {
         return "welcome-page";
     }
 
-
-
     @GetMapping("/user-panel")
     public String showUserPanel(Model model, HttpSession session) {
-        // Retrieve logged-in user from session
         User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
-        // Check if user is logged in
         if (loggedInUser != null) {
-            // Retrieve user from the database using the logged-in user's ID
             Optional<User> userOptional = userDAO.findById(loggedInUser.getId());
-            System.out.println("W user panel id: " + loggedInUser.getId() + "wygrane w panelu: " + loggedInUser.getInterval_answer_inc());
-            System.out.println("W user panel id: " + loggedInUser.getId() + "przegrane w panelu: " + loggedInUser.getInterval_answer_dec());
 
-
-            // Check if user exists in the database
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                model.addAttribute("user", user); // Add user to model
-                return "user-panel"; // Return the user-panel template
+                model.addAttribute("user", user);
+                return "user-panel";
             } else {
-                // Handle case where user ID doesn't exist (though it should not happen if session user is valid)
-                return "redirect:/error"; // Redirect to error page
+                return "redirect:/error";
             }
         } else {
-            // Redirect to login if user is not logged in
             return "redirect:/login";
         }
     }

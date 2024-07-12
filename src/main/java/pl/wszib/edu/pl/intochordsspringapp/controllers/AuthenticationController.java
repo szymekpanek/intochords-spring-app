@@ -35,11 +35,8 @@ public class AuthenticationController {
     public String login2(@RequestParam String login, @RequestParam String password) {
         this.authenticationService.login(login, password);
         if(this.httpSession.getAttribute(SessionConstants.USER_KEY) != null) {
-            System.out.println("POST LOGIN - Sesja użytkownika ustawiona");
             return "redirect:/";
         }
-        System.out.println("POST LOGIN - Sesja użytkownika nie ustawiona");
-
         return "redirect:/login";
     }
 
