@@ -1,4 +1,4 @@
-package pl.wszib.edu.pl.intochordsspringapp.dao;
+package pl.wszib.edu.pl.intochordsspringapp.memory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.wszib.edu.pl.intochordsspringapp.dao.IntervalDB;
+import pl.wszib.edu.pl.intochordsspringapp.dao.IUserDAO;
 import pl.wszib.edu.pl.intochordsspringapp.model.Interval;
-import pl.wszib.edu.pl.intochordsspringapp.model.Sound;
+import pl.wszib.edu.pl.intochordsspringapp.model.User;
 import pl.wszib.edu.pl.intochordsspringapp.services.IntervalGameServices;
-import pl.wszib.edu.pl.intochordsspringapp.dao.SoundDB;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.swing.*;
+
+
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +21,12 @@ import java.util.Optional;
 @Controller
 public class IntochordsController {
     private final IntervalGameServices intervalGameServices;
-    public IntochordsController (IntervalGameServices intervalGameServices){
+
+    private final IUserDAO userDAO;
+
+    public IntochordsController (IntervalGameServices intervalGameServices, IUserDAO userDAO){
         this.intervalGameServices = intervalGameServices;
+        this.userDAO = userDAO;
     }
 
     @GetMapping("/")
@@ -62,6 +65,13 @@ public class IntochordsController {
         httpSession.removeAttribute("result");
 
         return "redirect:interval-game";
+    }
+
+    @GetMapping("/user-panel")
+    public String showUser (Model model, HttpSession session){
+        List<User> users = userDAO.getAll();
+        model.addAttribute("users", users);
+        return "user-panel";
     }
 
 

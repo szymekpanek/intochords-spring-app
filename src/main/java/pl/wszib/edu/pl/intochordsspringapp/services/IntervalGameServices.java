@@ -2,8 +2,8 @@ package pl.wszib.edu.pl.intochordsspringapp.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.wszib.edu.pl.intochordsspringapp.dao.IntervalDB;
-import pl.wszib.edu.pl.intochordsspringapp.dao.SoundDB;
+import pl.wszib.edu.pl.intochordsspringapp.memory.IntervalDB;
+import pl.wszib.edu.pl.intochordsspringapp.memory.SoundDB;
 import pl.wszib.edu.pl.intochordsspringapp.model.Interval;
 import pl.wszib.edu.pl.intochordsspringapp.model.Sound;
 
@@ -61,7 +61,6 @@ public class IntervalGameServices {
             int firstSoundIndex = soundDB.getSounds().indexOf(sound);
             int secondSoundIndex = (firstSoundIndex + semitones) % soundDB.getSounds().size();
 
-            // Ensure the second index is positive
             if (secondSoundIndex < 0) {
                 secondSoundIndex += soundDB.getSounds().size();
             }
