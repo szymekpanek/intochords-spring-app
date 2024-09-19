@@ -19,10 +19,15 @@ public class DataInitialization implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         this.userDAO.save(new User(null, "Janusz", "Kowalski",
-                "janusz", DigestUtils.md5DigestAsHex("janusz123".getBytes()), 0,0));
+                "janusz", DigestUtils.md5DigestAsHex("janusz123".getBytes()),User.Role.USER, 0,0));
+
         this.userDAO.save(new User(null, "Szymon", "Panek",
-                "szymon", DigestUtils.md5DigestAsHex("szymon".getBytes()), 0,0));
+                "szymon", DigestUtils.md5DigestAsHex("szymon".getBytes()),User.Role.USER, 0,0));
+
         this.userDAO.save(new User(null, "admin", "admin",
-                "admin", DigestUtils.md5DigestAsHex("admin".getBytes()), 0,0));
+                "admin", DigestUtils.md5DigestAsHex("admin".getBytes()),User.Role.ADMIN, 0,0));
+
+        this.userDAO.save(new User(null, "nauczyciel", "nauczyciel",
+                "nauczyciel",DigestUtils.md5DigestAsHex("nauczyciel".getBytes()) ,User.Role.TEACHER, 0,0));
     }
 }

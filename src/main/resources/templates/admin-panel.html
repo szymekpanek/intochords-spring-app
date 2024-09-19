@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style/welcome-page-style/bg-animation.css">
+</head>
+<body>
+
+<!-- Nav bar -->
+<div th:replace="~{/components/nav :: nav}"></div>
+<br><br><br><br>
+<!-- Główna zawartość strony -->
+<div class="container mx-auto px-4 py-8">
+
+    <!-- Sekcja komunikatu o błędzie -->
+    <div th:if="${errorMessage}" class="bg-red-500 text-white p-3 rounded mb-4">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Tytuł sekcji admina -->
+    <h1 class="text-3xl font-bold mb-6">Admin Panel - Users</h1>
+
+    <!-- Tabela użytkowników -->
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="px-4 py-2 text-left">ID</th>
+                <th class="px-4 py-2 text-left">Name</th>
+                <th class="px-4 py-2 text-left">Surname</th>
+                <th class="px-4 py-2 text-left">Login</th>
+                <th class="px-4 py-2 text-left">Role</th>
+                <th class="px-4 py-2 text-left">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}" th:if="${user.role != T(pl.wszib.edu.pl.intochordsspringapp.model.User.Role).ADMIN}">
+                <td class="border-t px-4 py-2" th:text="${user.id}"></td>
+                <td class="border-t px-4 py-2" th:text="${user.name}"></td>
+                <td class="border-t px-4 py-2" th:text="${user.surname}"></td>
+                <td class="border-t px-4 py-2" th:text="${user.login}"></td>
+                <td class="border-t px-4 py-2" th:text="${user.role}"></td>
+                <td class="border-t px-4 py-2 flex space-x-2">
+                    <a th:href="@{'/admin-panel/edit/' + ${user.id}}"
+                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">
+                        Edit
+                    </a>
+
+                    <form th:action="@{'/admin-panel/delete/' + ${user.id}}" method="post" style="display:inline">
+                        <button type="submit"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="/script/animations/bg-animation.js"></script>
+</body>
+</html>

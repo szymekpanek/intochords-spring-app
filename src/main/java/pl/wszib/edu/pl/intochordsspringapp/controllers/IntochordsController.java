@@ -5,19 +5,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.wszib.edu.pl.intochordsspringapp.dao.IUserDAO;
 import pl.wszib.edu.pl.intochordsspringapp.dao.UserDB.UserDAO;
-import pl.wszib.edu.pl.intochordsspringapp.model.Interval;
 import pl.wszib.edu.pl.intochordsspringapp.model.User;
 import pl.wszib.edu.pl.intochordsspringapp.services.impl.IntervalGameServices;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -32,7 +25,18 @@ public class IntochordsController {
     }
 
     @GetMapping("/")
-    public String welcome(){
+    public String welcome(Model model, HttpSession session){
+        User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
+        if (loggedInUser != null) {
+            Optional<User> userOptional = userDAO.findById(loggedInUser.getId());
+
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                model.addAttribute("username", user.getName());
+                model.addAttribute("user", user);
+
+            }
+        }
         return "welcome-page";
     }
 

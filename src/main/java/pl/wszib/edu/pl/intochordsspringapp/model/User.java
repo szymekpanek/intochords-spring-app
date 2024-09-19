@@ -20,6 +20,14 @@ public class User {
     private String surname;
     private String login;
     private String password;
+    private Role role;
     private Integer interval_answer_inc;
     private Integer interval_answer_dec;
+
+    public enum Role {
+        ADMIN,
+        USER,
+        TEACHER
+    }
 }
+
