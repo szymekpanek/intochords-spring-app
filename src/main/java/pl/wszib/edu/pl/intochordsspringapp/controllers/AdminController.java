@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.wszib.edu.pl.intochordsspringapp.dao.UserDB.UserDAO;
@@ -47,8 +48,20 @@ public class AdminController {
     }
 
     @PostMapping("admin-panel/update")
-    public String updateUser(User user) {
-        iuserDAO.save(user);
+    public String updateUser(@ModelAttribute User user) {
+        User existingUser = iuserDAO.findById(user.getId()).orElse(null);
+
+        if (existingUser != null) {
+            existingUser.setName(user.getName());
+            existingUser.setSurname(user.getSurname());
+            existingUser.setLogin(user.getLogin());
+            existingUser.setRole(user.getRole());
+            iuserDAO.save(existingUser);
+        }
+
         return "redirect:/admin-panel";
     }
+
+
+
 }

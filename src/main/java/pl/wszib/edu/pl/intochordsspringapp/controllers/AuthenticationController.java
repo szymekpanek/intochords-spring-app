@@ -5,10 +5,11 @@ import org.springframework.stereotype.Controller;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import pl.wszib.edu.pl.intochordsspringapp.dao.IUserDAO;
+import pl.wszib.edu.pl.intochordsspringapp.dao.UserDB.UserDAO;
+import pl.wszib.edu.pl.intochordsspringapp.model.User;
 import pl.wszib.edu.pl.intochordsspringapp.services.IAuthenticationService;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
@@ -20,6 +21,9 @@ public class AuthenticationController {
 
     @Autowired
     HttpSession httpSession;
+
+    @Autowired
+    UserDAO userDAO;
 
 
     public AuthenticationController(IAuthenticationService authenticationService) {
@@ -45,4 +49,30 @@ public class AuthenticationController {
         this.authenticationService.logout();
         return "redirect:/";
     }
+
+
+    @GetMapping("/sing-up")
+    public String createUserForm(Model model) {
+        model.addAttribute("user", new User());
+        return "sing-up";
+    }
+
+    @PostMapping("/sing-up")
+    public String createUser(@ModelAttribute User user, BindingResult result, Model model) {
+
+//        if (userDAO.getAll(user.getLogin())) {
+//            result.rejectValue("username", "error.user", "Username is already taken.");
+//            return "create-user";
+//        }
+
+        if (user.getPassword().length() < 6) {
+            result.rejectValue("password", "error.user", "Password must be at least 6 characters long.");
+            return "create-user";
+        }
+
+        // Zapisanie nowego użytkownika
+        userDAO.save(user);
+        return "redirect:/";
+    }
+
 }

@@ -38,7 +38,7 @@ public class IntervalController {
 
             httpSession.setAttribute("randomInterval", randomInterval.getName());
         }
-        return "/gamesHTML/interval-game";
+        return "/interval-game";
     }
 
     @PostMapping("/check")
