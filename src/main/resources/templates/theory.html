@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theory</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{/components/nav :: nav}"></div>
+
+<br><br><br><br>
+
+<div class="container mx-auto mt-12">
+    <h1 class="text-3xl font-bold mb-6 text-white">Music Theory Resources</h1>
+    <p class="mb-4 text-white">All PDF files are available in Polish.</p>
+
+    <ul class="space-y-4">
+        <li class="flex justify-between items-center bg-white shadow p-4 rounded">
+            <span>Harmony - Introduction</span>
+            <a href="/theory/download/Harmonia.pdf"
+               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" download>Download</a>
+        </li>
+        <li class="flex justify-between items-center bg-white shadow p-4 rounded">
+            <span>Tertian Chord Construction</span>
+            <a href="/theory/download/Budowa_akordow.pdf"
+               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" download>Download</a>
+        </li>
+        <li class="flex justify-between items-center bg-white shadow p-4 rounded">
+            <span>Multi-Note Structures</span>
+            <a href="/theory/download/Wielodzwieki.pdf"
+               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" download>Download</a>
+        </li>
+        <li class="flex justify-between items-center bg-white shadow p-4 rounded">
+            <span>Dominants</span>
+            <a href="/theory/download/Dominanty.pdf"
+               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" download>Download</a>
+        </li>
+        <li class="flex justify-between items-center bg-white shadow p-4 rounded">
+            <span>Symbol Notation for Functions</span>
+            <a href="/theory/download/Zapis_Funkcji.pdf"
+               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" download>Download</a>
+        </li>
+        <li class="flex justify-between items-center bg-white shadow p-4 rounded">
+            <span>Score</span>
+            <a href="/theory/download/Partytura.pdf"
+               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" download>Download</a>
+        </li>
+    </ul>
+
+    <div class="items-center">
+        <div class="mt-8">
+            <p class="text-lg mb-4 font-bold text-white">Learn more about Chords Game</p>
+
+            <iframe width="560" height="315"
+                    src="https://www.youtube.com/embed/hqZJVY_Nxhs?list=PLzWxuTpz0aNgmE0CR8vZcoqGkIuEIGYW3&index=4"
+                    frameborder="0" allowfullscreen></iframe>
+        </div>
+        <br>
+        <div class="mt-8">
+            <p class="text-lg mb-4 font-bold text-white">Learn more about Intervals in music theory</p>
+
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/2V3bvZu2Xqo" frameborder="0"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+</body>
+</html>
