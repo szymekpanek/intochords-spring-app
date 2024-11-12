@@ -10,13 +10,22 @@
 
 <div th:replace="~{/components/nav :: nav}"></div>
 
-<div class="flex justify-center items-center h-screen">
-    <div class="text-center">
-        <h1 class="text-4xl font-bold mb-4">Welcome to Intochords </h1>
+<div class="flex flex-col justify-center items-center h-screen text-center">
+    <h1 class="text-5xl font-extrabold mb-4 text-black">Welcome to Intochords</h1>
+    <p class="text-xl mb-6 text-black">Your ultimate platform for learning music theory through interactive games!</p>
 
-        <p class="text-lg mb-4">The best place to learn music theory</p>
-        <a href="/interval-game" id="change-background" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded">Intervals game</a>
+    <div class="bg-white bg-opacity-100 p-6 rounded-lg shadow-lg mb-6 w-full max-w-md">
+        <h2 class="text-2xl font-bold text-black text-left">Features:</h2>
+        <ul class="list-none text-black mt-2 text-left">
+            <li class="mb-2">🎵 Interactive games that make learning fun and engaging.</li>
+            <li class="mb-2">📊 Track your progress with detailed game statistics after logging in.</li>
+            <li class="mb-2">📚 Downloadable PDF resources for in-depth music theory study.</li>
+        </ul>
     </div>
+
+    <p class="text-lg text-black mb-6">Join us on this musical journey and enhance your skills!</p>
+
+    <a href="/interval-game" id="change-background" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded transition duration-300">Start Playing the Intervals Game</a>
 </div>
 
 <script src="/script/animations/bg-animation.js"></script>

@@ -16,6 +16,7 @@ public class DataInitialization implements CommandLineRunner {
 
     private final UserDAO userDAO;
     private final IdSequence idSequence;
+    private GameSessionDAO gameSessionDAO;
     @Override
     public void run(String... args) throws Exception {
         this.userDAO.save(new User(null, "Janusz", "Kowalski",

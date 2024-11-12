@@ -14,7 +14,6 @@
 
 <br><br><br><br><br><br><br><br>
 
-
 <div class="container mx-auto mt-16 p-6 bg-white rounded-lg shadow-lg">
 
     <h1 class="text-3xl font-semibold mb-6 text-center">User Panel</h1>
@@ -49,6 +48,92 @@
 
 </div>
 
-<script src="/script/user/charts.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const gameSessions = /*[[${gameSessionsJson}]]*/ '[]'; // Domyślnie pusty JSON, jeśli brak danych
+    const parsedGameSessions = JSON.parse(gameSessions); // Parsowanie JSON do tablicy
+    /*]]>*/
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (parsedGameSessions.length === 0) {
+            console.warn("Brak danych w gameSessions. Wykres może się nie wyświetlić.");
+            return;
+        }
+
+        // Przygotowanie danych dla wykresu
+        const labels = [];
+        const wonGamesData = [];
+        const lostGamesData = [];
+
+        // Grupowanie gier według daty
+        parsedGameSessions.forEach(session => {
+            const date = new Date(session.date).toLocaleDateString(); // Formatowanie daty
+            const gameIndex = labels.indexOf(date);
+
+            if (gameIndex === -1) {
+                // Jeśli data jeszcze nie występuje w etykietach
+                labels.push(date);
+                wonGamesData.push(session.correct ? 1 : 0);
+                lostGamesData.push(session.correct ? 0 : 1);
+            } else {
+                // Jeśli data już występuje, dodajemy do odpowiednich grup
+                wonGamesData[gameIndex] += session.correct ? 1 : 0;
+                lostGamesData[gameIndex] += session.correct ? 0 : 1;
+            }
+        });
+
+        // Tworzenie wykresu
+        const ctx = document.getElementById('gameStatsChart').getContext('2d');
+        const gameStatsChart = new Chart(ctx, {
+            type: 'bar', // Zmiana wykresu na słupkowy
+            data: {
+                labels: labels, // Etykiety dat
+                datasets: [{
+                    label: 'Games Won',
+                    data: wonGamesData, // Liczba wygranych gier w danym dniu
+                    backgroundColor: '#68d391', // Kolor dla wygranych gier
+                    borderWidth: 1
+                }, {
+                    label: 'Games Lost',
+                    data: lostGamesData, // Liczba przegranych gier w danym dniu
+                    backgroundColor: '#fc8181', // Kolor dla przegranych gier
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Games'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (tooltipItem) {
+                                const total = tooltipItem.dataset.data.reduce((sum, value) => sum + value, 0);
+                                const currentValue = tooltipItem.raw;
+                                const percent = Math.round((currentValue / total) * 100);
+                                return `${tooltipItem.label}: ${percent}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

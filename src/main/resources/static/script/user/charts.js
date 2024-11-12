@@ -1,38 +1,40 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var incGames = parseInt(/* użyj th:text="${user.interval_answer_inc}" */);
-    var decGames = parseInt(/* użyj th:text="${user.interval_answer_dec}" */);
-
-    var ctx = document.getElementById('gameStatsChart').getContext('2d');
-    var gameStatsChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Games Won', 'Games Lost'],
-            datasets: [{
-                label: 'Game Statistics',
-                data: [incGames, decGames],
-                backgroundColor: [
-                    '#68d391', // kolor dla wygranych gier
-                    '#fc8181'  // kolor dla przegranych gier
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var dataset = data.datasets[tooltipItem.datasetIndex];
-                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                            return previousValue + currentValue;
-                        });
-                        var currentValue = dataset.data[tooltipItem.index];
-                        var percent = Math.round((currentValue / total) * 100);
-                        return `${data.labels[tooltipItem.index]}: ${percent}%`;
-                    }
-                }
-            }
-        }
-    });
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//     const gameSessions = /* [[${gameSessions}]] */;
+//     const gameNames = Array.from(new Set(gameSessions.map(session => session.gameName)));
+//
+//     const datasets = gameNames.map(name => {
+//         const sessionsForGame = gameSessions.filter(session => session.gameName === name);
+//         const dates = sessionsForGame.map(session => session.timestamp);
+//         const correctCounts = sessionsForGame.map(session => session.isCorrect ? 1 : 0);
+//         const incorrectCounts = sessionsForGame.map(session => session.isCorrect ? 0 : 1);
+//
+//         return {
+//             label: `${name} - Correct`,
+//             data: correctCounts,
+//             borderColor: 'green',
+//             fill: false
+//         }, {
+//             label: `${name} - Incorrect`,
+//             data: incorrectCounts,
+//             borderColor: 'red',
+//             fill: false
+//         };
+//     });
+//
+//     const ctx = document.getElementById('gameStatsChart').getContext('2d');
+//     new Chart(ctx, {
+//         type: 'line',
+//         data: {
+//             labels: dates,
+//             datasets: datasets
+//         },
+//         options: {
+//             responsive: true,
+//             scales: {
+//                 x: {type: 'time', time: {unit: 'day'}},
+//                 y: {beginAtZero: true}
+//             }
+//         }
+//     });
+// });
+//
