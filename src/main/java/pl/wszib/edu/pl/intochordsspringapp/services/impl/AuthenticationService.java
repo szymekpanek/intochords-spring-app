@@ -25,7 +25,7 @@ public class AuthenticationService implements IAuthenticationService {
         if (user.isPresent() &&
                 DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.get().getPassword())) {
             System.out.println("Login successful for user: " + user.get().getLogin());
-            System.out.println("ID user: " + user.get().getId());
+            System.out.println("ID user: " + user.get().getUser_id());
             httpSession.setAttribute(SessionConstants.USER_KEY, user.get());
             httpSession.setAttribute(SessionConstants.CART_KEY, new HashSet<>());
             return;

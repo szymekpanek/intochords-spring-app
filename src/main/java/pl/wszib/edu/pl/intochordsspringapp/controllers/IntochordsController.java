@@ -28,7 +28,7 @@ public class IntochordsController {
     public String welcome(Model model, HttpSession session){
         User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
         if (loggedInUser != null) {
-            Optional<User> userOptional = userDAO.findById(loggedInUser.getId());
+            Optional<User> userOptional = userDAO.findById(loggedInUser.getUser_id());
 
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
@@ -44,7 +44,7 @@ public class IntochordsController {
     public String showUserPanel(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
         if (loggedInUser != null) {
-            Optional<User> userOptional = userDAO.findById(loggedInUser.getId());
+            Optional<User> userOptional = userDAO.findById(loggedInUser.getUser_id());
 
             if (userOptional.isPresent()) {
                 User user = userOptional.get();

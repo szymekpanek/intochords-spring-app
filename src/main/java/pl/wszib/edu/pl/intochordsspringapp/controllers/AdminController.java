@@ -49,7 +49,7 @@ public class AdminController {
 
     @PostMapping("admin-panel/update")
     public String updateUser(@ModelAttribute User user) {
-        User existingUser = iuserDAO.findById(user.getId()).orElse(null);
+        User existingUser = iuserDAO.findById(user.getUser_id()).orElse(null);
 
         if (existingUser != null) {
             existingUser.setName(user.getName());
@@ -61,7 +61,4 @@ public class AdminController {
 
         return "redirect:/admin-panel";
     }
-
-
-
 }
