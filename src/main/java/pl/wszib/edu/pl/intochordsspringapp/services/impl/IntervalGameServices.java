@@ -77,10 +77,4 @@ public class IntervalGameServices {
     public boolean checkAnswer(String answer, String randomInterval){
         return randomInterval != null && randomInterval.equals(answer);
     }
-
-
-
-
-
-
 }

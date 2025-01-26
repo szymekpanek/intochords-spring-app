@@ -4,56 +4,59 @@
     <meta charset="UTF-8">
     <title>Interval Game</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="/style/intervals-game-stylesheet.css" rel="stylesheet" >
+    <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
 </head>
 <body>
 
 <div th:replace="~{/components/nav :: nav}"></div>
 
-<br><br><br><br>
+<section class="flex flex-col justify-center items-center min-h-screen py-10 px-6">
+    <div class="bg-white p-10 rounded-2xl shadow-lg max-w-3xl w-full transform transition-transform duration-300">
+        <div class="container mx-auto flex flex-col items-center">
+            <h1 class="text-5xl font-extrabold mb-6 text-gray-800 drop-shadow-md">Interval Game</h1>
 
-<div class="container mx-auto px-4">
-    <div class="container mx-auto px-4 flex items-center justify-center">
-        <h1 class="text-4xl font-bold mb-4 text-white">Interval Game</h1>
-    </div>
+            <div class="mt-8 flex flex-col items-center space-y-4">
+                <button id="playSounds" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg">
+                    Play
+                </button>
 
-    <div class="mt-8">
-        <button id="playSounds" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play</button>
+                <audio id="firstSound" th:src="@{${sounds[0].path}}" style="display: none;"></audio>
+                <audio id="secondSound" th:src="@{${sounds[1].path}}" style="display: none;"></audio>
 
-        <audio id="firstSound" th:src="@{${sounds[0].path}}" style="display: none;"></audio>
-
-        <audio id="secondSound" th:src="@{${sounds[1].path}}" style="display: none;"></audio>
-
-        <div class="mt-4">
-            <label for="volumeSlider" class="text-lg font-bold mb-2 text-white">Volume</label>
-            <input type="range" min="0" max="1" step="0.01" id="volumeSlider" value="0.5">
+                <div class="mt-4 w-full">
+                    <label for="volumeSlider" class="text-lg font-semibold mb-2 text-gray-800">Volume</label>
+                    <input type="range" min="0" max="1" step="0.01" id="volumeSlider" value="0.5" class="w-full accent-blue-500">
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<form id="myForm" action="/check" method="post" class="max-w-md mx-auto">
+        <form id="myForm" action="/check" method="post" class="mt-10">
+            <div class="grid grid-cols-3 gap-6">
+                <div th:each="interval : ${intervals}" class="text-center">
+                    <button type="button" th:id="${interval.name}" th:value="${interval.name}"
+                            class="interval-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg w-full"
+                            onclick="selectInterval(this)">
+                        <span th:text="${interval.name}"></span>
+                    </button>
+                </div>
+            </div>
 
-    <div class="grid grid-cols-3 gap-4">
-        <div th:each="interval : ${intervals}">
-            <button type="button" th:id="${interval.name}" th:value="${interval.name}" class="interval-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" onclick="selectInterval(this)">
-                <span th:text="${interval.name}"></span>
+            <input type="hidden" id="userAnswer" name="userAnswer">
+
+            <button type="submit" id="submitAnswer"
+                    class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg mt-8 block w-full"
+                    disabled>
+                Check answer
             </button>
+        </form>
+
+        <div th:if="${result}" class="mt-6 max-w-md mx-auto" id="resultMessage">
+            <p th:text="${result}"
+               th:class="${result == 'Correct' ? 'bg-green-500 p-4 text-white text-center rounded-lg' : 'bg-red-500 p-4 text-white text-center rounded-lg'}">
+            </p>
         </div>
     </div>
-
-    <input type="hidden" id="userAnswer" name="userAnswer">
-
-    <button type="submit" id="submitAnswer" class="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 block w-full" disabled>
-        Check answer
-    </button>
-
-</form>
-
-<div th:if="${result}" class="mt-6 max-w-md mx-auto" id="resultMessage">
-    <p th:text="${result}"
-       th:class="${result == 'Correct' ? 'bg-green-500 mt-6 max-w-md mx-auto p-2 text-white text-center rounded-md' : 'bg-red-500 mt-6 max-w-md mx-auto p-2 text-white text-center rounded-md'}"
-    ></p>
-</div>
+</section>
 
 <script src="/script/interval/select-interval.js"></script>
 <script src="/script/interval/interval-game-play-sound.js"></script>
