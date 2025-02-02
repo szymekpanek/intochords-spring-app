@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import pl.wszib.edu.pl.intochordsspringapp.dao.UserDB.UserDAO;
-import pl.wszib.edu.pl.intochordsspringapp.model.User;
+import pl.wszib.edu.pl.intochordsspringapp.dao.UserDAO;
+import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
 import pl.wszib.edu.pl.intochordsspringapp.services.IAuthenticationService;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
@@ -21,17 +21,19 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public void login(String login, String password) {
-        Optional<User> user = this.userDAO.findByLogin(login);
-        if (user.isPresent() &&
-                DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.get().getPassword())) {
-            System.out.println("Login successful for user: " + user.get().getLogin());
-            System.out.println("ID user: " + user.get().getUser_id());
-            httpSession.setAttribute(SessionConstants.USER_KEY, user.get());
+        Optional<User> userOptional = this.userDAO.findByLogin(login);
+        if (userOptional.isPresent() &&
+                DigestUtils.md5DigestAsHex(password.getBytes()).equals(userOptional.get().getPassword())) {
+            User user = userOptional.get();
+            System.out.println("Login successful for user: " + user.getLogin());
+            System.out.println("ID user: " + user.getUserId());
+            httpSession.setAttribute(SessionConstants.USER_KEY, user);
             httpSession.setAttribute(SessionConstants.CART_KEY, new HashSet<>());
             return;
         }
         this.httpSession.setAttribute("loginInfo", "Invalid credentials");
     }
+
 
     @Override
     public void logout() {

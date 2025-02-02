@@ -8,23 +8,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import pl.wszib.edu.pl.intochordsspringapp.dao.UserDB.UserDAO;
+import pl.wszib.edu.pl.intochordsspringapp.dao.GameDAO;
+import pl.wszib.edu.pl.intochordsspringapp.dao.GameStatsDAO;
 import pl.wszib.edu.pl.intochordsspringapp.model.Interval;
-import pl.wszib.edu.pl.intochordsspringapp.model.User;
+import pl.wszib.edu.pl.intochordsspringapp.model.dbo.Game;
+import pl.wszib.edu.pl.intochordsspringapp.model.dbo.GameStats;
+import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
 import pl.wszib.edu.pl.intochordsspringapp.services.impl.IntervalGameServices;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
 public class IntervalController {
     private final IntervalGameServices intervalGameServices;
-    private final UserDAO userDAO;
+    private final GameStatsDAO gameStatsDAO;
+    private final GameDAO gameDAO;
 
     @Autowired
-    public IntervalController(IntervalGameServices intervalGameServices, UserDAO userDAO) {
+    public IntervalController(IntervalGameServices intervalGameServices, GameStatsDAO gameStatsDAO, GameDAO gameDAO) {
         this.intervalGameServices = intervalGameServices;
-        this.userDAO = userDAO;
+        this.gameStatsDAO = gameStatsDAO;
+        this.gameDAO = gameDAO;
     }
 
     @GetMapping("/interval-game")
@@ -54,12 +60,13 @@ public class IntervalController {
         boolean isCorrect = intervalGameServices.checkAnswer(userAnswer, randomInterval);
 
         if (isAuthenticated) {
-            if (isCorrect) {
-                loggedInUser.setInterval_answer_inc(loggedInUser.getInterval_answer_inc() + 1);
-            } else {
-                loggedInUser.setInterval_answer_dec(loggedInUser.getInterval_answer_dec() + 1);
-            }
-            userDAO.save(loggedInUser);
+            Game intervalGame = gameDAO.findByGameName(Game.GameName.IntervalGame)
+                    .orElseThrow(() -> new RuntimeException("Game not found"));
+
+            GameStats gameStats = new GameStats(null, loggedInUser, intervalGame, LocalDateTime.now(),
+                    isCorrect ? 1 : 0, isCorrect ? 0 : 1);
+
+            gameStatsDAO.save(gameStats);
         }
 
         redirectAttributes.addFlashAttribute("result", isCorrect ? "Correct" : "Not correct");

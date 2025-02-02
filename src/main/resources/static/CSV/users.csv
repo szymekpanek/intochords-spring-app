@@ -1,0 +1,5 @@
+classId,name,surname,login,password,role
+1,Janusz,Kowalski,janusz,janusz123,USER
+1,Szymon,Panek,szymon,szymon,USER
+1,Admin,Admin,admin,admin,ADMIN
+1,Nauczyciel,Nauczyciel,nauczyciel,nauczyciel,TEACHER

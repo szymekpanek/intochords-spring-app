@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import pl.wszib.edu.pl.intochordsspringapp.dao.UserDB.UserDAO;
-import pl.wszib.edu.pl.intochordsspringapp.model.User;
+import pl.wszib.edu.pl.intochordsspringapp.dao.UserDAO;
+import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
 
 import java.util.Optional;
 
@@ -17,46 +17,46 @@ import java.util.Optional;
 public class AdminController {
 
     @Autowired
-    private UserDAO iuserDAO;
+    private UserDAO userDAO;
 
 
     @GetMapping("admin-panel")
     public String showAdminPanel(Model model) {
-        model.addAttribute("users", iuserDAO.findAll());
+        model.addAttribute("users", userDAO.findAll());
         return "admin-panel";
     }
 
     @PostMapping("admin-panel/delete/{id}")
-    public String deleteUser(@PathVariable Long id, HttpSession session, Model model) {
-        Optional<User> userToDelete = iuserDAO.findById(id);
+    public String deleteUser(@PathVariable Integer id, HttpSession session, Model model) {
+        Optional<User> userToDelete = userDAO.findById(id);
 
         if (userToDelete.isPresent()) {
             if (userToDelete.get().getRole() == User.Role.ADMIN) {
                 model.addAttribute("errorMessage", "You cannot delete an ADMIN account.");
                 return "redirect:/admin-panel";
             }
-            iuserDAO.deleteById(id);
+            userDAO.deleteById(id);
         }
 
         return "redirect:/admin-panel";
     }
 
     @GetMapping("admin-panel/edit/{id}")
-    public String editUserForm(@PathVariable Long id, Model model) {
-        model.addAttribute("user", iuserDAO.findById(id).orElse(null));
+    public String editUserForm(@PathVariable Integer id, Model model) {
+        model.addAttribute("user", userDAO.findById(id).orElse(null));
         return "edit-user";
     }
 
     @PostMapping("admin-panel/update")
     public String updateUser(@ModelAttribute User user) {
-        User existingUser = iuserDAO.findById(user.getUser_id()).orElse(null);
+        User existingUser = userDAO.findById(user.getUserId()).orElse(null);
 
         if (existingUser != null) {
             existingUser.setName(user.getName());
             existingUser.setSurname(user.getSurname());
             existingUser.setLogin(user.getLogin());
             existingUser.setRole(user.getRole());
-            iuserDAO.save(existingUser);
+            userDAO.save(existingUser);
         }
 
         return "redirect:/admin-panel";

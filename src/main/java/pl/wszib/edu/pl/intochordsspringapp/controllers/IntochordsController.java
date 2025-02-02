@@ -5,8 +5,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.wszib.edu.pl.intochordsspringapp.dao.UserDB.UserDAO;
-import pl.wszib.edu.pl.intochordsspringapp.model.User;
+import pl.wszib.edu.pl.intochordsspringapp.dao.UserDAO;
+import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
 import pl.wszib.edu.pl.intochordsspringapp.services.impl.IntervalGameServices;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
@@ -28,7 +28,7 @@ public class IntochordsController {
     public String welcome(Model model, HttpSession session){
         User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
         if (loggedInUser != null) {
-            Optional<User> userOptional = userDAO.findById(loggedInUser.getUser_id());
+            Optional<User> userOptional = userDAO.findById(loggedInUser.getUserId());
 
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
@@ -44,7 +44,7 @@ public class IntochordsController {
     public String showUserPanel(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
         if (loggedInUser != null) {
-            Optional<User> userOptional = userDAO.findById(loggedInUser.getUser_id());
+            Optional<User> userOptional = userDAO.findById(loggedInUser.getUserId());
 
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
