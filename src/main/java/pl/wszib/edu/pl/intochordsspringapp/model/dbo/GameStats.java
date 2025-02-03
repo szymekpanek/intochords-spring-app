@@ -1,9 +1,7 @@
 package pl.wszib.edu.pl.intochordsspringapp.model.dbo;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -28,14 +26,19 @@ public class GameStats {
     @Column(name = "game_date")
     private LocalDateTime gameDate;
 
+    @Setter
     @Column(name = "correct_answer")
     private int correctAnswer;
 
+    @Setter
     @Column(name = "incorrect_answer")
     private int incorrectAnswer;
 
-    public GameStats(int gameStatsId, User user, Game game, LocalDateTime gameDate, int correctAnswer, int incorrectAnswer) {
-        this.gameStatsId = gameStatsId;
+
+
+    public GameStats() {}
+
+    public GameStats(User user, Game game, LocalDateTime gameDate, int correctAnswer, int incorrectAnswer) {
         this.user = user;
         this.game = game;
         this.gameDate = gameDate;
@@ -43,7 +46,13 @@ public class GameStats {
         this.incorrectAnswer = incorrectAnswer;
     }
 
-    public GameStats() {}
+    public void setCorrectAnswer(int correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public void setIncorrectAnswer(int incorrectAnswer) {
+        this.incorrectAnswer = incorrectAnswer;
+    }
 }
 
 

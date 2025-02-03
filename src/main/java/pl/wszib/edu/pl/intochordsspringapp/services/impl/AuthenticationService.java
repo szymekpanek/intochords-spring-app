@@ -10,6 +10,7 @@ import pl.wszib.edu.pl.intochordsspringapp.services.IAuthenticationService;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,14 +22,12 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public void login(String login, String password) {
-        Optional<User> userOptional = this.userDAO.findByLogin(login);
-        if (userOptional.isPresent() &&
-                DigestUtils.md5DigestAsHex(password.getBytes()).equals(userOptional.get().getPassword())) {
-            User user = userOptional.get();
-            System.out.println("Login successful for user: " + user.getLogin());
-            System.out.println("ID user: " + user.getUserId());
-            httpSession.setAttribute(SessionConstants.USER_KEY, user);
-            httpSession.setAttribute(SessionConstants.CART_KEY, new HashSet<>());
+        Optional<User> user = this.userDAO.findByLogin(login);
+        if (user.isPresent() &&
+                DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.get().getPassword())) {
+            System.out.println("Login successful for user: " + user.get().getLogin());
+            System.out.println("ID user: " + user.get().getUserId());
+            httpSession.setAttribute(SessionConstants.USER_KEY, user.get());
             return;
         }
         this.httpSession.setAttribute("loginInfo", "Invalid credentials");
@@ -38,7 +37,6 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public void logout() {
         this.httpSession.removeAttribute(SessionConstants.USER_KEY);
-        this.httpSession.removeAttribute(SessionConstants.CART_KEY);
     }
 
     @Override

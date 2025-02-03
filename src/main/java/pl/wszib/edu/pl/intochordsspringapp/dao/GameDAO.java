@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface GameDAO extends JpaRepository<Game, Integer > {
     Optional<Game> findByGameName(Game.GameName gameName);
+//    int findByGameId(int id);
+    Game findByGameId(int gameId);
 }

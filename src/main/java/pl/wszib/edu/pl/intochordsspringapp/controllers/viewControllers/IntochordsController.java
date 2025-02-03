@@ -40,21 +40,21 @@ public class IntochordsController {
         return "welcome-page";
     }
 
-    @GetMapping("/user-panel")
-    public String showUserPanel(Model model, HttpSession session) {
-        User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
-        if (loggedInUser != null) {
-            Optional<User> userOptional = userDAO.findById(loggedInUser.getUserId());
-
-            if (userOptional.isPresent()) {
-                User user = userOptional.get();
-                model.addAttribute("user", user);
-                return "user-panel";
-            } else {
-                return "redirect:/error";
-            }
-        } else {
-            return "redirect:/login";
-        }
-    }
+//    @GetMapping("/user-panel")
+//    public String showUserPanel(Model model, HttpSession session) {
+//        User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
+//        if (loggedInUser != null) {
+//            Optional<User> userOptional = userDAO.findById(loggedInUser.getUserId());
+//
+//            if (userOptional.isPresent()) {
+//                User user = userOptional.get();
+//                model.addAttribute("user", user);
+//                return "user-panel";
+//            } else {
+//                return "redirect:/error";
+//            }
+//        } else {
+//            return "redirect:/login";
+//        }
+//    }
 }
