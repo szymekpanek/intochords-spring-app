@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Getter
 @Setter
 @Entity
@@ -19,17 +20,14 @@ public class Game {
     @Enumerated(EnumType.STRING)
     @Column(name = "game_name")
     private GameName gameName;
-
-    public Game() {
-
-    }
+    public Game() {}
 
     public enum GameName {
         IntervalGame,
         ChordsGame
     }
 
-    public Game(Integer gameId, GameName gameName) {
+    public Game(int gameId, GameName gameName) {
         this.gameId = gameId;
         this.gameName = gameName;
     }

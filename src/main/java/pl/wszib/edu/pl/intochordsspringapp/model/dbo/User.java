@@ -16,7 +16,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "class_id", referencedColumnName = "class_id")
-    private TClass aTClass;
+    private TClass tClass;
 
     @Column(name = "username")
     private String name;
@@ -44,9 +44,9 @@ public class User {
         TEACHER
     }
 
-    public User(Integer userId, TClass aTClass, String name, String surname, String login, String password, Role role) {
+    public User(int userId, TClass tClass, String name, String surname, String login, String password, Role role) {
         this.userId = userId;
-        this.aTClass = aTClass;
+        this.tClass = tClass;
         this.name = name;
         this.surname = surname;
         this.login = login;

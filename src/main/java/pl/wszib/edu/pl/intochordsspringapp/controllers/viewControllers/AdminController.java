@@ -1,4 +1,4 @@
-package pl.wszib.edu.pl.intochordsspringapp.controllers;
+package pl.wszib.edu.pl.intochordsspringapp.controllers.viewControllers;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

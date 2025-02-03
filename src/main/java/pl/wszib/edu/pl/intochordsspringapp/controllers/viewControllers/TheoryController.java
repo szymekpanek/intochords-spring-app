@@ -1,4 +1,4 @@
-package pl.wszib.edu.pl.intochordsspringapp.controllers;
+package pl.wszib.edu.pl.intochordsspringapp.controllers.viewControllers;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;

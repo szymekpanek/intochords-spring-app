@@ -34,7 +34,7 @@ public class GameStats {
     @Column(name = "incorrect_answer")
     private int incorrectAnswer;
 
-    public GameStats(Integer gameStatsId, User user, Game game, LocalDateTime gameDate, int correctAnswer, int incorrectAnswer) {
+    public GameStats(int gameStatsId, User user, Game game, LocalDateTime gameDate, int correctAnswer, int incorrectAnswer) {
         this.gameStatsId = gameStatsId;
         this.user = user;
         this.game = game;
@@ -42,6 +42,8 @@ public class GameStats {
         this.correctAnswer = correctAnswer;
         this.incorrectAnswer = incorrectAnswer;
     }
+
+    public GameStats() {}
 }
 
 

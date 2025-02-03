@@ -29,15 +29,13 @@ public class TClass {
     @OneToMany(mappedBy = "aTClass")
     private List<UserClass> users = new ArrayList<>();
 
-    public TClass(Integer classId, String className, User creator, List<UserClass> users) {
+    public TClass(int classId, String className, User creator, List<UserClass> users) {
         this.classId = classId;
         this.className = className;
         this.creator = creator;
         this.users = users;
     }
 
-    public TClass() {
-
-    }
+    public TClass() {}
 }
 

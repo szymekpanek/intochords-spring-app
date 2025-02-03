@@ -31,9 +31,7 @@ public class UserClass{
         this.aTClass = aTClass;
     }
 
-    public UserClass() {
-
-    }
+    public UserClass() {}
 }
 
 
