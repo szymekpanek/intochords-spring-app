@@ -1,26 +1,23 @@
 package pl.wszib.edu.pl.intochordsspringapp.services.impl;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wszib.edu.pl.intochordsspringapp.dao.GameStatsDAO;
+import pl.wszib.edu.pl.intochordsspringapp.model.dbo.GameStats;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class UserStatsService {
+public class UserGameStatsService {
 
     private final GameStatsDAO gameStatsDAO;
 
     @Autowired
-    public UserStatsService(GameStatsDAO gameStatsDAO) {
+    public UserGameStatsService(GameStatsDAO gameStatsDAO) {
         this.gameStatsDAO = gameStatsDAO;
     }
 
-    public List<Map<String, Object>> getUserStatsForGame(int userId, int gameId, LocalDate startDate) {
-        return gameStatsDAO.findUserGameStats(userId, gameId, startDate);
+    public List<GameStats> getGameStatsByUser(int userId) {
+        return gameStatsDAO.findByUser_UserId(userId);
     }
 }
-

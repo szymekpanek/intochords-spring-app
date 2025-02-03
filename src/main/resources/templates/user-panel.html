@@ -4,44 +4,53 @@
     <meta charset="UTF-8">
     <title>User Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
     <script src="/script/charts/user-stats.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100">
 
 <div th:replace="~{/components/nav :: nav}"></div>
 
-<div class="container mx-auto mt-16 p-6 bg-white rounded-lg shadow-lg">
-    <h1 class="text-3xl font-semibold mb-6 text-center">User Panel</h1>
+<section class="flex flex-col justify-center items-center min-h-screen py-10 px-6">
+    <div class="bg-white p-10 rounded-2xl shadow-lg max-w-3xl w-full transform transition-transform duration-300">
+        <div class="container mx-auto flex flex-col items-center">
+            <h1 class="text-4xl font-extrabold mb-6 text-gray-800 drop-shadow-md">User Panel</h1>
 
-    <div class="mb-6 grid grid-cols-2 gap-4">
-        <div>
-            <p class="text-lg font-semibold"><strong>Name:</strong> <span th:text="${user.name}"></span></p>
-            <p class="text-lg font-semibold"><strong>Surname:</strong> <span th:text="${user.surname}"></span></p>
-        </div>
-        <div>
-            <p class="text-lg font-semibold"><strong>Login:</strong> <span th:text="${user.login}"></span></p>
+            <div class="mt-4 w-full">
+                <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md">
+                    <p class="text-lg font-semibold text-gray-700">Name:</p>
+                    <p class="text-lg text-gray-900" th:text="${user.name}"></p>
+                </div>
+
+                <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mt-4">
+                    <p class="text-lg font-semibold text-gray-700">Surname:</p>
+                    <p class="text-lg text-gray-900" th:text="${user.surname}"></p>
+                </div>
+
+                <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mt-4">
+                    <p class="text-lg font-semibold text-gray-700">Login:</p>
+                    <p class="text-lg text-gray-900" th:text="${user.login}"></p>
+                </div>
+            </div>
+
+            <div class="mt-8 w-full">
+                <h2 id="gameTitle" class="text-2xl font-semibold text-gray-800 text-center mb-4">Statystyki dla: ...</h2>
+                <div class="relative w-full h-80">
+                    <canvas id="gameStatsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="/" class="py-3 px-6 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+                    Back to Home
+                </a>
+            </div>
         </div>
     </div>
-
-    <div class="grid grid-cols-2 gap-6">
-        <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
-            <p class="text-lg font-semibold mb-2">Games won:</p>
-            <p class="text-4xl font-bold text-green-500"><span id="gamesWon">0</span></p>
-        </div>
-        <div class="bg-red-50 p-6 rounded-lg shadow-lg">
-            <p class="text-lg font-semibold mb-2">Games lost:</p>
-            <p class="text-4xl font-bold text-red-500"><span id="gamesLost">0</span></p>
-        </div>
-        <div class="col-span-2">
-            <canvas id="gameStatsChart" height="300"></canvas>
-        </div>
-    </div>
-
-    <div class="mt-8 text-center">
-        <a href="/" class="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600">Back to Home</a>
-    </div>
-</div>
+</section>
 
 
 </body>

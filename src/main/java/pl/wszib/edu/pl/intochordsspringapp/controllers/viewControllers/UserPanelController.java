@@ -22,20 +22,20 @@ public class UserPanelController {
     }
 
     @GetMapping("/user-panel")
-    public String showUserPanel(HttpSession session, Model model) {
+    public String showUserPanel(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute(SessionConstants.USER_KEY);
-
         if (loggedInUser != null) {
             Optional<User> userOptional = userDAO.findById(loggedInUser.getUserId());
 
             if (userOptional.isPresent()) {
-                model.addAttribute("user", userOptional.get());
-                return "user-panel"; // Przekierowanie do widoku Thymeleaf: user-panel.html
+                User user = userOptional.get();
+                model.addAttribute("user", user);
+                return "user-panel";
             } else {
-                return "redirect:/error"; // Obsługa błędu, jeśli użytkownik nie istnieje w bazie
+                return "redirect:/error";
             }
         } else {
-            return "redirect:/login"; // Przekierowanie na stronę logowania, jeśli użytkownik nie jest zalogowany
+            return "redirect:/login";
         }
     }
 }
