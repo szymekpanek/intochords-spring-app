@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 gameName = "Chords Game";
             }
 
-            gameTitleElement.textContent = `Statystyki dla: ${gameName}`;
+            gameTitleElement.textContent = `${gameName}`;
         }
     }
 

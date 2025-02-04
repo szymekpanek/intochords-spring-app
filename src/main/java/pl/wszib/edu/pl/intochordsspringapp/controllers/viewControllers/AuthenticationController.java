@@ -15,66 +15,84 @@ import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
 import java.util.Optional;
 
-
 @Controller
 public class AuthenticationController {
 
     private final IAuthenticationService authenticationService;
 
     @Autowired
-    HttpSession httpSession;
+    private HttpSession httpSession;
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     public AuthenticationController(IAuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("loginInfo", this.authenticationService.getLoginInfo());
         return "login";
     }
 
     @PostMapping("/login")
-    public String login2(@RequestParam String login, @RequestParam String password) {
+    public String login(@RequestParam String login, @RequestParam String password) {
         this.authenticationService.login(login, password);
-        if(this.httpSession.getAttribute(SessionConstants.USER_KEY) != null) {
+        if (this.httpSession.getAttribute(SessionConstants.USER_KEY) != null) {
             return "redirect:/";
         }
         return "redirect:/login";
     }
 
-    @RequestMapping(path = "/logout", method = RequestMethod.GET)
+    @GetMapping("/logout")
     public String logout() {
         this.authenticationService.logout();
         return "redirect:/"; // Przekierowanie do strony głównej po wylogowaniu
     }
 
-    @GetMapping("/sing-up")
+    @GetMapping("/sign-up")  // Poprawiona ścieżka
     public String createUserForm(Model model) {
         model.addAttribute("user", new User());
-        return "sing-up";
+        return "sign-up";  // Poprawiona ścieżka widoku
     }
 
-    @PostMapping("/sing-up")
-    public String createUser(@ModelAttribute User user, BindingResult result) {
+    @PostMapping("/sign-up")  // Poprawiona ścieżka
+    public String createUser(@ModelAttribute User user, BindingResult result, Model model) {
+        // Sprawdzenie, czy login jest już zajęty
         if (userDAO.findByLogin(user.getLogin()).isPresent()) {
             result.rejectValue("login", "error.user", "Login is already taken.");
-            return "sing-up";
+            model.addAttribute("errorMessage", "Login is already taken.");
+            return "sign-up";
         }
 
+        // Sprawdzenie długości hasła
         if (user.getPassword().length() < 6) {
             result.rejectValue("password", "error.user", "Password must be at least 6 characters long.");
-            return "sing-up";
+            model.addAttribute("errorMessage", "Password must be at least 6 characters long.");
+            return "sign-up";
+        }
+
+        // Sprawdzenie imienia i nazwiska
+        if (user.getName().length() < 2 || !user.getName().matches("[A-Za-z]+")) {
+            model.addAttribute("errorMessage", "Invalid name. Must be at least 2 letters.");
+            return "sign-up";
+        }
+        if (user.getSurname().length() < 2 || !user.getSurname().matches("[A-Za-z]+")) {
+            model.addAttribute("errorMessage", "Invalid surname. Must be at least 2 letters.");
+            return "sign-up";
         }
 
         // Hashowanie hasła przed zapisaniem
         String hashedPassword = DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
         user.setPassword(hashedPassword);
 
-        userDAO.save(user); // Zapisanie nowego użytkownika do bazy
-        return "redirect:/"; // Po zapisaniu użytkownika przekierowanie na stronę główną
+        // Zapisanie użytkownika
+        userDAO.save(user);
+
+        // Automatyczne logowanie po rejestracji
+        this.httpSession.setAttribute(SessionConstants.USER_KEY, user);
+
+        return "redirect:/"; // Przekierowanie na stronę główną
     }
 }

@@ -12,6 +12,7 @@
 <!-- Nav bar -->
 <div th:replace="~{/components/nav :: nav}"></div>
 <br><br><br><br>
+
 <!-- Główna zawartość strony -->
 <div class="container mx-auto px-4 py-8">
 
@@ -37,24 +38,30 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}" th:if="${user.role != T(pl.wszib.edu.pl.intochordsspringapp.model.User.Role).ADMIN}">
-                <td class="border-t px-4 py-2" th:text="${user.id}"></td>
+            <!-- Iteracja po użytkownikach -->
+            <tr th:each="user : ${users}">
+                <td class="border-t px-4 py-2" th:text="${user.userId}"></td>
                 <td class="border-t px-4 py-2" th:text="${user.name}"></td>
                 <td class="border-t px-4 py-2" th:text="${user.surname}"></td>
                 <td class="border-t px-4 py-2" th:text="${user.login}"></td>
                 <td class="border-t px-4 py-2" th:text="${user.role}"></td>
                 <td class="border-t px-4 py-2 flex space-x-2">
-                    <a th:href="@{'/admin-panel/edit/' + ${user.id}}"
+
+                    <!-- Przycisk edycji użytkownika -->
+                    <a th:href="@{'/admin-panel/edit/' + ${user.userId}}"
                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">
                         Edit
                     </a>
 
-                    <form th:action="@{'/admin-panel/delete/' + ${user.id}}" method="post" style="display:inline">
+                    <!-- Przycisk usuwania, ale tylko dla użytkowników, którzy NIE są ADMINAMI -->
+                    <form th:if="${user.role != T(pl.wszib.edu.pl.intochordsspringapp.model.dbo.User.Role).ADMIN}"
+                          th:action="@{'/admin-panel/delete/' + ${user.userId}}" method="post">
                         <button type="submit"
                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">
                             Delete
                         </button>
                     </form>
+
                 </td>
             </tr>
             </tbody>
@@ -62,7 +69,5 @@
     </div>
 
 </div>
-
-<script src="/script/animations/bg-animation.js"></script>
 </body>
 </html>
