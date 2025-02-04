@@ -16,11 +16,9 @@ import java.util.Optional;
 
 @Controller
 public class IntochordsController {
-    private final IntervalGameServices intervalGameServices;
     private final UserDAO userDAO;
 
-    public IntochordsController (IntervalGameServices intervalGameServices, UserDAO userDAO){
-        this.intervalGameServices = intervalGameServices;
+    public IntochordsController (UserDAO userDAO){
         this.userDAO = userDAO;
     }
 

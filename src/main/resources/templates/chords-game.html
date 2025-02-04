@@ -5,40 +5,64 @@
     <title>Chords Game</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
-    <style>
-        /* Reset marginesów i paddingów */
-        body, html {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-    </style>
+    <link href="/style/chords-game.css" rel="stylesheet">
+    <script src="/script/chords/chords-game.js" defer></script> <!-- Skrypt do logiki gry -->
 </head>
 <body>
 <div th:replace="~{/components/nav :: nav}"></div>
 
 <div class="flex flex-col items-center justify-center min-h-screen">
-    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-md mt-16">
-        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Chords Game</h2>
+    <div class="w-full max-w-lg p-8 bg-white rounded-lg shadow-md mt-16">
+        <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Chords Game</h2>
 
-        <div class="grid grid-cols-3 gap-4 mb-6">
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input type="text" class="w-full p-4 text-center border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <!-- Wybór typu akordu -->
+        <!-- Wybór typu akordu -->
+        <div class="flex justify-center mb-6">
+            <button id="major-button" class="bg-blue-500 text-white px-6 py-3 rounded-l-lg text-lg font-semibold focus:outline-none">
+                Major Chords
+            </button>
+            <button id="minor-button" class="bg-gray-500 text-white px-6 py-3 rounded-r-lg text-lg font-semibold focus:outline-none">
+                Minor Chords
+            </button>
         </div>
 
-        <button class="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition ease-in-out duration-200">
+
+        <!-- Oznaczenia kolumn -->
+        <div class="grid grid-cols-3 gap-6 text-center font-bold text-xl mb-3">
+            <div id="label-1">1</div>
+            <div id="label-3">3</div>
+            <div id="label-5">5</div>
+        </div>
+
+        <!-- Plansza gry -->
+        <div class="grid grid-cols-3 gap-6 mb-6">
+            <input type="text" id="cell-0-0" class="chord-cell locked w-20 h-20 text-xl text-center border rounded-lg shadow-md" readonly />
+            <input type="text" id="cell-0-1" class="chord-cell w-20 h-20 text-xl text-center border rounded-lg shadow-md" />
+            <input type="text" id="cell-0-2" class="chord-cell w-20 h-20 text-xl text-center border rounded-lg shadow-md" />
+
+            <input type="text" id="cell-1-0" class="chord-cell w-20 h-20 text-xl text-center border rounded-lg shadow-md" />
+            <input type="text" id="cell-1-1" class="chord-cell locked w-20 h-20 text-xl text-center border rounded-lg shadow-md" readonly />
+            <input type="text" id="cell-1-2" class="chord-cell w-20 h-20 text-xl text-center border rounded-lg shadow-md" />
+
+            <input type="text" id="cell-2-0" class="chord-cell w-20 h-20 text-xl text-center border rounded-lg shadow-md" />
+            <input type="text" id="cell-2-1" class="chord-cell w-20 h-20 text-xl text-center border rounded-lg shadow-md" />
+            <input type="text" id="cell-2-2" class="chord-cell locked w-20 h-20 text-xl text-center border rounded-lg shadow-md" readonly />
+        </div>
+
+        <!-- Komunikat o wyniku -->
+        <p id="result-message" class="text-center font-semibold text-lg mb-4 hidden"></p>
+
+        <!-- Przycisk do sprawdzania odpowiedzi -->
+        <button id="check-button" class="w-full bg-blue-500 text-white py-4 text-xl rounded-lg font-semibold hover:bg-blue-600 focus:outline-none transition ease-in-out duration-200">
             Submit
+        </button>
+
+        <!-- Przycisk do nowego akordu (ukryty na starcie) -->
+        <button id="next-chord-button" class="w-full bg-green-500 text-white py-4 text-xl rounded-lg font-semibold hover:bg-green-600 focus:outline-none transition ease-in-out duration-200 mt-4 hidden">
+            Next Chord
         </button>
     </div>
 </div>
+
 </body>
 </html>

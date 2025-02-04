@@ -1,0 +1,20 @@
+.correct {
+    background-color: #4CAF50 !important; /* Zielony dla poprawnych odpowiedzi */
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.incorrect {
+    background-color: #F44336 !important; /* Czerwony dla błędnych odpowiedzi */
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.bg-gray-200 {
+    background-color: #E5E7EB !important; /* Blokada pól po przekątnej */
+    color: black;
+}
+
+.chord-cell {
+    text-transform: uppercase; /* Zamienia małe litery na wielkie */
+}

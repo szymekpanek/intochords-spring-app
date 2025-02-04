@@ -26,9 +26,6 @@ public class IntervalController {
         this.intervalGameServices = intervalGameServices;
     }
 
-    /**
-     * GET - Wyświetla stronę z grą interwałową.
-     */
     @GetMapping
     public String showIntervalGame(Model model) {
         List<Interval> intervals = intervalGameServices.getAllIntervals();

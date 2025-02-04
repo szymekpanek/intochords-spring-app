@@ -1,10 +1,9 @@
-body {
-    background-image: url('../../images/bg1.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    transition: background-image 1s ease-in-out;
+@keyframes wave-animation {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(10px); }
+    100% { transform: translateY(0px); }
 }
 
-.new-background {
-    background-image: url('../../images/bg2.svg');
+#wave1, #wave2, #wave3 {
+    animation: wave-animation 4s ease-in-out infinite;
 }

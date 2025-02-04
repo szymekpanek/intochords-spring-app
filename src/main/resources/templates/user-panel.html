@@ -5,13 +5,10 @@
     <title>User Panel</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
-    <script src="/script/charts/user-stats.js"></script>
-
-
+    <script src="/script/charts/user-stats.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100">
-
 <div th:replace="~{/components/nav :: nav}"></div>
 
 <section class="flex flex-col justify-center items-center min-h-screen py-10 px-6">
@@ -19,27 +16,35 @@
         <div class="container mx-auto flex flex-col items-center">
             <h1 class="text-4xl font-extrabold mb-6 text-gray-800 drop-shadow-md">User Panel</h1>
 
+            <!-- Informacje o użytkowniku -->
             <div class="mt-4 w-full">
                 <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md">
                     <p class="text-lg font-semibold text-gray-700">Name:</p>
                     <p class="text-lg text-gray-900" th:text="${user.name}"></p>
                 </div>
-
                 <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mt-4">
                     <p class="text-lg font-semibold text-gray-700">Surname:</p>
                     <p class="text-lg text-gray-900" th:text="${user.surname}"></p>
                 </div>
-
                 <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mt-4">
                     <p class="text-lg font-semibold text-gray-700">Login:</p>
                     <p class="text-lg text-gray-900" th:text="${user.login}"></p>
                 </div>
             </div>
 
+            <!-- Statystyki dla "Interval Game" -->
             <div class="mt-8 w-full">
-                <h2 id="gameTitle" class="text-2xl font-semibold text-gray-800 text-center mb-4">Statystyki dla: ...</h2>
+                <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">Interval Game Statistics</h2>
                 <div class="relative w-full h-80">
-                    <canvas id="gameStatsChart"></canvas>
+                    <canvas id="intervalGameStatsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Statystyki dla "Chords Game" -->
+            <div class="mt-8 w-full">
+                <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">Chords Game Statistics</h2>
+                <div class="relative w-full h-80">
+                    <canvas id="chordsGameStatsChart"></canvas>
                 </div>
             </div>
 
@@ -51,7 +56,5 @@
         </div>
     </div>
 </section>
-
-
 </body>
 </html>
