@@ -43,7 +43,8 @@
                     <tbody id="game-stats-body" class="text-gray-600 text-sm">
                     </tbody>
                 </table>
-                <p id="no-data-message" class="text-gray-500 p-4 text-center hidden">Brak statystyk gier dla tej klasy.</p>
+                <p id="no-data-message" class="text-gray-500 p-4 text-center hidden">Brak statystyk gier dla tej
+                    klasy.</p>
             </div>
 
             <div class="mt-4 flex gap-4">
@@ -51,7 +52,11 @@
                    class="flex-1 bg-green-500 text-white py-3 rounded-lg text-center hover:bg-green-600 transition">
                     ➕ Add Students
                 </a>
-                <a id="edit-class-button" href="/class-panel/edit-class" class="flex-1 bg-yellow-500 text-white py-3 rounded-lg text-center hover:bg-yellow-600 transition">✏️ Edit Class</a>
+
+                <a id="edit-class-button" th:href="@{/class-panel/edit-class(classId=${classId})}"
+                   class="flex-1 bg-yellow-500 text-white py-3 rounded-lg text-center hover:bg-yellow-600 transition">
+                    ✏️ Edit Class
+                </a>
             </div>
         </div>
     </section>

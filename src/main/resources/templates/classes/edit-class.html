@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Class</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
+    <script src="/script/classes/edit-class.js" defer></script>
+</head>
+<body class="bg-gray-100">
+<div th:replace="~{/components/nav :: nav}"></div>
+
+<div class="flex justify-center items-center min-h-screen">
+    <section class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg">
+        <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-6">Edit Class</h1>
+
+        <!-- Edycja nazwy klasy -->
+        <div class="mb-6">
+            <label for="class-name" class="block text-lg font-medium text-gray-700">Class Name</label>
+            <input type="text" id="class-name" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg"
+                   th:value="${className}">
+            <button id="save-class-name"
+                    class="mt-3 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+                Save Name
+            </button>
+        </div>
+
+        <!-- Lista uczniów -->
+        <div class="mb-6">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-3">Students</h2>
+            <ul id="students-list" class="max-h-60 overflow-y-auto border border-gray-300 rounded-lg p-4 space-y-3">
+                <!-- Uczniowie będą generowani przez JavaScript -->
+            </ul>
+        </div>
+
+        <!-- Przycisk powrotu -->
+        <a th:href="@{/class-panel/{classId}(classId=${classId})}"
+           class="block text-center bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition">
+            Back to Class Panel
+        </a>
+    </section>
+</div>
+
+</body>
+</html>

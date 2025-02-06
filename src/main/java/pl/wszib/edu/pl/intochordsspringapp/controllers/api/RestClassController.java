@@ -233,7 +233,6 @@ public class RestClassController {
 
     @GetMapping("/{classId}")
     public ResponseEntity<Map<String, Object>> getClassGameStats(@PathVariable Integer classId) {
-        // Sprawdzamy, czy klasa istnieje
         Optional<TClass> optionalTClass = classDAO.findById(classId);
         if (optionalTClass.isEmpty()) {
             return ResponseEntity.status(404).body(Collections.singletonMap("error", "Class not found"));
@@ -241,14 +240,13 @@ public class RestClassController {
 
         TClass tClass = optionalTClass.get();
         List<User> students = tClass.getUsers().stream()
-                .map(userClass -> userClass.getUser()) // Pobieramy użytkowników z `t_user_class`
+                .map(UserClass::getUser) // Pobieramy użytkowników z `t_user_class`
                 .toList();
 
         if (students.isEmpty()) {
             return ResponseEntity.ok(Collections.singletonMap("message", "No students found in this class"));
         }
 
-        // Pobieramy statystyki dla wszystkich uczniów w klasie
         List<Map<String, Object>> studentStatsList = new ArrayList<>();
 
         for (User student : students) {
@@ -266,6 +264,7 @@ public class RestClassController {
             }).collect(Collectors.toList());
 
             Map<String, Object> studentData = new HashMap<>();
+            studentData.put("userId", student.getUserId()); // ✅ Dodajemy userId
             studentData.put("studentName", student.getName() + " " + student.getSurname());
             studentData.put("login", student.getLogin());
             studentData.put("gameStats", gameStatsList);
@@ -273,13 +272,71 @@ public class RestClassController {
             studentStatsList.add(studentData);
         }
 
-        // Tworzymy mapę odpowiedzi
         Map<String, Object> response = new HashMap<>();
         response.put("className", tClass.getClassName());
         response.put("students", studentStatsList);
 
         return ResponseEntity.ok(response);
     }
+
+
+    @PostMapping("/edit-name")
+    public ResponseEntity<?> editClassName(@RequestBody Map<String, Object> payload) {
+        try {
+            Integer classId = Integer.parseInt(payload.get("classId").toString()); // ✅ Konwersja String -> Integer
+            String newName = (String) payload.get("newName");
+
+            Optional<TClass> existingClass = classDAO.findById(classId);
+            if (existingClass.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Class not found.");
+            }
+
+            TClass tClass = existingClass.get();
+            tClass.setClassName(newName);
+            classDAO.save(tClass);
+
+            return ResponseEntity.ok("Class name updated.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating class name: " + e.getMessage());
+        }
+    }
+
+
+    @PostMapping("/remove-student")
+    public ResponseEntity<?> removeStudentFromClass(@RequestBody Map<String, Object> payload) {
+        try {
+            System.out.println("📩 Otrzymane dane: " + payload);
+
+            Object classIdObj = payload.get("classId");
+            Object studentIdObj = payload.get("studentId");
+
+            if (classIdObj == null || studentIdObj == null) {
+                System.out.println("❌ Błąd: classId lub studentId są null!");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid request: classId or studentId is missing.");
+            }
+
+            Integer classId = Integer.parseInt(classIdObj.toString());
+            Integer studentId = Integer.parseInt(studentIdObj.toString());
+
+            System.out.println("🔍 classId: " + classId + ", studentId: " + studentId);
+
+            Optional<UserClass> userClass = userClassDAO.findById(new UserClassId(studentId, classId));
+            if (userClass.isEmpty()) {
+                System.out.println("⚠️ Student nie znaleziony w klasie!");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student not found in this class.");
+            }
+
+            userClassDAO.delete(userClass.get());
+            System.out.println("✅ Student usunięty!");
+            return ResponseEntity.ok("Student removed from class.");
+        } catch (Exception e) {
+            System.err.println("❌ Błąd usuwania studenta: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing student: " + e.getMessage());
+        }
+    }
+
+
+
 }
 
 

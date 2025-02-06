@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const classId = new URLSearchParams(window.location.search).get("classId"); // Pobranie classId z URL
+    const classId = getClassIdFromUrl(); // Pobieramy poprawnie `classId`
     if (!classId) {
         alert("Class ID is missing! Redirecting...");
         window.location.href = "/class-panel";
@@ -27,8 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const li = document.createElement("li");
                 li.classList.add("flex", "justify-between", "items-center", "p-3", "rounded-lg");
-
-
 
                 li.innerHTML = `
                     <span>${student.name} ${student.surname} (${student.login})</span>
@@ -63,8 +61,20 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(() => {
                 alert("Students added successfully!");
-                window.location.href = "/class-panel";
+                window.location.href = `/class-panel/${classId}`; // ✅ Poprawne przekierowanie
             })
             .catch(error => console.error("Error:", error));
     });
 });
+
+function getClassIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const classId = params.get("classId");
+
+    if (!classId || isNaN(classId)) {
+        console.error("❌ Błąd: Brak poprawnego ID klasy w URL!");
+        return null;
+    }
+
+    return parseInt(classId); // ✅ Zawsze zwracamy `Number`, nie `String`
+}

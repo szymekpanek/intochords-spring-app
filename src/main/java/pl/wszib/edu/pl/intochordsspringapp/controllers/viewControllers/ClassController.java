@@ -53,29 +53,20 @@ public class ClassController {
     public String showClassPanel(@PathVariable Integer classId, HttpSession session, Model model) {
         User teacher = getLoggedTeacher(session);
         if (teacher == null) {
-            return "redirect:/"; // Jeśli użytkownik nie jest nauczycielem → przekierowanie na stronę główną
+            return "redirect:/";
         }
 
         Optional<TClass> existingClass = classDAO.findById(classId);
         if (existingClass.isEmpty()) {
-            return "redirect:/class-panel/create"; // Jeśli klasa nie istnieje → przekierowanie na stronę tworzenia klasy
+            return "redirect:/class-panel/create";
         }
 
-        TClass tClass = existingClass.get();
-        List<User> students = userDAO.findUsersByClassId(classId);
-        List<GameStats> gameStatsList = gameStatsDAO.findByUserIn(students);
+        model.addAttribute("classId", classId); // ✅ Upewniamy się, że `classId` jest w modelu
+        model.addAttribute("className", existingClass.get().getClassName());
 
-        logger.info("📌 Klasa: {}", tClass.getClassName());
-        logger.info("👨‍🎓 Znaleziono uczniów: {}", students.size());
-        logger.info("🎮 Liczba statystyk gier: {}", gameStatsList.size());
-
-        model.addAttribute("classId", classId); // ✅ Teraz `classId` jest dostępne w Thymeleaf
-        model.addAttribute("className", tClass.getClassName());
-        model.addAttribute("students", students);
-        model.addAttribute("gameStats", gameStatsList);
-
-        return classesPath + "class-panel";
+        return "classes/class-panel";
     }
+
 
 
     @GetMapping("/class-panel/create")
@@ -105,4 +96,27 @@ public class ClassController {
         model.addAttribute("classId", classId);
         return "classes/add-students";
     }
+
+    @GetMapping("/class-panel/edit-class")
+    public String showEditClassPage(@RequestParam("classId") Integer classId, Model model, HttpSession session) {
+        User teacher = getLoggedTeacher(session);
+        if (teacher == null) {
+            return "redirect:/";
+        }
+
+        Optional<TClass> existingClass = classDAO.findById(classId);
+        if (existingClass.isEmpty()) {
+            return "redirect:/class-panel";
+        }
+
+        TClass tClass = existingClass.get();
+        List<User> students = userDAO.findUsersByClassId(classId);
+
+        model.addAttribute("classId", classId);
+        model.addAttribute("className", tClass.getClassName());
+        model.addAttribute("students", students);
+
+        return "classes/edit-class";
+    }
+
 }
