@@ -13,8 +13,6 @@ import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
 import pl.wszib.edu.pl.intochordsspringapp.services.IAuthenticationService;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
-import java.util.Optional;
-
 @Controller
 public class AuthenticationController {
 
@@ -26,6 +24,8 @@ public class AuthenticationController {
     @Autowired
     private UserDAO userDAO;
 
+    private String path = "user/";
+
     public AuthenticationController(IAuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
@@ -33,7 +33,7 @@ public class AuthenticationController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("loginInfo", this.authenticationService.getLoginInfo());
-        return "login";
+        return path + "login";
     }
 
     @PostMapping("/login")
@@ -42,7 +42,7 @@ public class AuthenticationController {
         if (this.httpSession.getAttribute(SessionConstants.USER_KEY) != null) {
             return "redirect:/";
         }
-        return "redirect:/login";
+        return "redirect:" + path + "login";
     }
 
     @GetMapping("/logout")
@@ -54,7 +54,7 @@ public class AuthenticationController {
     @GetMapping("/sign-up")  // Poprawiona ścieżka
     public String createUserForm(Model model) {
         model.addAttribute("user", new User());
-        return "sign-up";  // Poprawiona ścieżka widoku
+        return path + "sign-up";  // Poprawiona ścieżka widoku
     }
 
     @PostMapping("/sign-up")  // Poprawiona ścieżka
@@ -63,24 +63,24 @@ public class AuthenticationController {
         if (userDAO.findByLogin(user.getLogin()).isPresent()) {
             result.rejectValue("login", "error.user", "Login is already taken.");
             model.addAttribute("errorMessage", "Login is already taken.");
-            return "sign-up";
+            return path + "sign-up";
         }
 
         // Sprawdzenie długości hasła
         if (user.getPassword().length() < 6) {
             result.rejectValue("password", "error.user", "Password must be at least 6 characters long.");
             model.addAttribute("errorMessage", "Password must be at least 6 characters long.");
-            return "sign-up";
+            return path + "sign-up";
         }
 
         // Sprawdzenie imienia i nazwiska
         if (user.getName().length() < 2 || !user.getName().matches("[A-Za-z]+")) {
             model.addAttribute("errorMessage", "Invalid name. Must be at least 2 letters.");
-            return "sign-up";
+            return path + "sign-up";
         }
         if (user.getSurname().length() < 2 || !user.getSurname().matches("[A-Za-z]+")) {
             model.addAttribute("errorMessage", "Invalid surname. Must be at least 2 letters.");
-            return "sign-up";
+            return path + "sign-up";
         }
 
         // Hashowanie hasła przed zapisaniem

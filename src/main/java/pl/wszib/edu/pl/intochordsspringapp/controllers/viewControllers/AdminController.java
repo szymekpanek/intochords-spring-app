@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +23,7 @@ public class AdminController {
     @GetMapping("admin-panel")
     public String showAdminPanel(Model model) {
         model.addAttribute("users", userDAO.findAll());
-        return "admin-panel";
+        return "user/admin-panel";
     }
 
     @PostMapping("admin-panel/delete/{id}")
@@ -39,13 +38,13 @@ public class AdminController {
             userDAO.deleteById(id);
         }
 
-        return "redirect:/admin-panel";
+        return "redirect:user/admin-panel";
     }
 
     @GetMapping("admin-panel/edit/{id}")
     public String editUserForm(@PathVariable Integer id, Model model) {
         model.addAttribute("user", userDAO.findById(id).orElse(null));
-        return "edit-user";
+        return "user/edit-user";
     }
 
     @PostMapping("admin-panel/update")

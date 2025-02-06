@@ -30,12 +30,12 @@ public class UserPanelController {
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 model.addAttribute("user", user);
-                return "user-panel";
+                return "user/user-panel";
             } else {
                 return "redirect:/error";
             }
         } else {
-            return "redirect:/login";
+            return "redirect:user/login";
         }
     }
 }

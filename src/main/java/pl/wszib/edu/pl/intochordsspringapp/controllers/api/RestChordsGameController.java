@@ -1,4 +1,4 @@
-package pl.wszib.edu.pl.intochordsspringapp.controllers.restControllers;
+package pl.wszib.edu.pl.intochordsspringapp.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -12,7 +12,6 @@ import pl.wszib.edu.pl.intochordsspringapp.model.Sound;
 import pl.wszib.edu.pl.intochordsspringapp.model.dbo.Game;
 import pl.wszib.edu.pl.intochordsspringapp.model.dbo.GameStats;
 import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
-import pl.wszib.edu.pl.intochordsspringapp.services.IIntervalGameServices;
 
 import java.time.LocalDateTime;
 import java.util.*;

@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import pl.wszib.edu.pl.intochordsspringapp.dao.UserDAO;
 import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
-import pl.wszib.edu.pl.intochordsspringapp.services.impl.IntervalGameServices;
 import pl.wszib.edu.pl.intochordsspringapp.session.SessionConstants;
 
 
@@ -35,6 +34,6 @@ public class IntochordsController {
 
             }
         }
-        return "welcome-page";
+        return "onePage/welcome-page";
     }
 }

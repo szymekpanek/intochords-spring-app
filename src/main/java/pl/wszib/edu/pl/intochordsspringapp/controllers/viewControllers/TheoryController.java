@@ -17,7 +17,7 @@ public class TheoryController {
 
     @GetMapping
     public String theoryPage() {
-        return "theory";
+        return "onePage/theory";
     }
 
     @GetMapping("/download/{filename:.+}")

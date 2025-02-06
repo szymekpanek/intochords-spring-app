@@ -8,6 +8,6 @@ public class ChordsGameController {
 
     @GetMapping("/chords-game")
     public String showIntervalGame() {
-        return "chords-game";
+        return "games/chords-game";
     }
 }

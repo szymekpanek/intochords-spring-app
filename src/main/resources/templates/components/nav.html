@@ -12,6 +12,12 @@
             <a href="/login"  th:if="${session.user == null}" class="text-white hover:text-blue-700">Log in</a>
             <a href="/logout" th:if="${session.user != null}" class="text-white hover:text-blue-700">Log out</a>
             <a href="/admin-panel" th:if="${session.user?.role == T(pl.wszib.edu.pl.intochordsspringapp.model.dbo.User.Role).ADMIN}" class="text-white hover:text-blue-700">Admin Panel</a>
+            <a th:if="${session.user?.role == T(pl.wszib.edu.pl.intochordsspringapp.model.dbo.User.Role).TEACHER and session.user.tClass != null}"
+               th:href="@{/class-panel/{classId}(classId=${session.user.tClass.classId})}"
+               class="text-white hover:text-blue-700">
+                Class Panel
+            </a>
+
         </div>
     </div>
 </nav>

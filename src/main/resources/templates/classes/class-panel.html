@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Class Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
+    <script src="/script/classes/class-panel.js" defer></script>
+
+</head>
+<body class="bg-gray-100">
+
+<!-- Nawigacja -->
+<div th:replace="~{/components/nav :: nav}"></div>
+
+<div class="flex justify-center items-center min-h-screen p-6">
+    <section class="w-full max-w-6xl bg-white p-10 rounded-2xl shadow-xl">
+
+        <!-- Nagłówek klasy -->
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">
+                Klasa <span class="text-blue-600" id="class-name" th:text="${className}"></span>
+            </h1>
+            <a href="/" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
+                🔙 Powrót
+            </a>
+        </div>
+
+        <!-- Statystyki gier uczniów -->
+        <div>
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">📊 Statystyki gier uczniów</h2>
+            <div class="overflow-x-auto rounded-lg border border-gray-300 shadow-md">
+                <table id="game-stats-table" class="min-w-full bg-white border-collapse">
+                    <thead>
+                    <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                        <th class="px-6 py-4 border border-gray-300 text-left">Uczeń</th>
+                        <th class="px-6 py-4 border border-gray-300 text-left">Gra</th>
+                        <th class="px-6 py-4 border border-gray-300 text-center">Data</th>
+                        <th class="px-6 py-4 border border-gray-300 text-center text-green-600">✔ Poprawne</th>
+                        <th class="px-6 py-4 border border-gray-300 text-center text-red-600">✘ Błędne</th>
+                    </tr>
+                    </thead>
+                    <tbody id="game-stats-body" class="text-gray-600 text-sm">
+                    </tbody>
+                </table>
+                <p id="no-data-message" class="text-gray-500 p-4 text-center hidden">Brak statystyk gier dla tej klasy.</p>
+            </div>
+
+            <div class="mt-4 flex gap-4">
+                <a id="add-students-button" th:href="@{/class-panel/add-students(classId=${classId})}"
+                   class="flex-1 bg-green-500 text-white py-3 rounded-lg text-center hover:bg-green-600 transition">
+                    ➕ Add Students
+                </a>
+                <a id="edit-class-button" href="/class-panel/edit-class" class="flex-1 bg-yellow-500 text-white py-3 rounded-lg text-center hover:bg-yellow-600 transition">✏️ Edit Class</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>

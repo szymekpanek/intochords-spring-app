@@ -23,12 +23,12 @@ public class UserClass{
     @ManyToOne
     @MapsId("classId")
     @JoinColumn(name = "class_id")
-    private TClass aTClass;
+    private TClass TClass;
 
     public UserClass(UserClassId id, User user, TClass aTClass) {
         this.id = id;
         this.user = user;
-        this.aTClass = aTClass;
+        this.TClass = aTClass;
     }
 
     public UserClass() {}

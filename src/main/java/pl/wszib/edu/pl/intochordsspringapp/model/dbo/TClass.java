@@ -26,7 +26,7 @@ public class TClass {
     @JoinColumn(name = "creator_id", referencedColumnName = "user_id")
     private User creator;
 
-    @OneToMany(mappedBy = "aTClass")
+    @OneToMany(mappedBy = "TClass")
     private List<UserClass> users = new ArrayList<>();
 
     public TClass(int classId, String className, User creator, List<UserClass> users) {

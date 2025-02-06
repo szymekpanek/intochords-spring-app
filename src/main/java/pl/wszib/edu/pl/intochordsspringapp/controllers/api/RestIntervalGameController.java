@@ -1,4 +1,4 @@
-package pl.wszib.edu.pl.intochordsspringapp.controllers.restControllers;
+package pl.wszib.edu.pl.intochordsspringapp.controllers.api;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +13,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/interval-game")
-public class IntervalGameRestController {
+public class RestIntervalGameController {
     private final IntervalGameServices intervalGameServices;
 
     @Autowired
-    public IntervalGameRestController(IntervalGameServices intervalGameServices) {
+    public RestIntervalGameController(IntervalGameServices intervalGameServices) {
         this.intervalGameServices = intervalGameServices;
     }
 
