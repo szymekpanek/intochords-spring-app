@@ -280,12 +280,24 @@ public class RestClassController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student not found in this class.");
             }
 
+            // ✅ Usuwamy studenta z klasy
             userClassDAO.delete(userClass.get());
             System.out.println("✅ Student usunięty!");
+
+            // ✅ Aktualizujemy pole `class_id` w tabeli `users`, ustawiając `NULL`
+            Optional<User> studentOpt = userDAO.findById(studentId);
+            if (studentOpt.isPresent()) {
+                User student = studentOpt.get();
+                student.setTClass(null); // Ustawiamy `class_id` na `NULL`
+                userDAO.save(student);
+                System.out.println("✅ class_id w tabeli users zaktualizowane na NULL!");
+            }
+
             return ResponseEntity.ok("Student removed from class.");
         } catch (Exception e) {
             System.err.println("❌ Błąd usuwania studenta: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing student: " + e.getMessage());
         }
     }
+
 }

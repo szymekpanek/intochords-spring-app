@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface TeacherFileDAO extends JpaRepository<TeacherFile, Integer> {
     List<TeacherFile> findByTeacher(User teacher); // Pobiera pliki dodane przez danego nauczyciela
+
+
 }
 
 

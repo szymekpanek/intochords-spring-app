@@ -26,6 +26,11 @@
                 Create Class
             </a>
 
+            <!-- ✅ Link "Files" widoczny tylko dla uczniów, którzy mają przypisaną klasę -->
+            <a th:if="${session.classId != null}" th:href="@{/files(classId=${session.classId})}"
+               class="text-white hover:text-blue-700">
+                Files
+            </a>
         </div>
     </div>
 </nav>

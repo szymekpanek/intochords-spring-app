@@ -39,11 +39,23 @@ public class AuthenticationController {
     @PostMapping("/login")
     public String login(@RequestParam String login, @RequestParam String password) {
         this.authenticationService.login(login, password);
-        if (this.httpSession.getAttribute(SessionConstants.USER_KEY) != null) {
+        User user = (User) this.httpSession.getAttribute(SessionConstants.USER_KEY);
+
+        if (user != null) {
+            // Sprawdzenie, czy użytkownik jest przypisany do klasy (dotyczy uczniów)
+            if (user.getRole() == User.Role.USER && user.getTClass() != null) {
+                int classId = user.getTClass().getClassId();
+                this.httpSession.setAttribute("classId", classId);
+            } else {
+                this.httpSession.removeAttribute("classId");
+            }
+
             return "redirect:/";
         }
-        return "redirect:" + path + "login";
+
+        return "redirect:/login";
     }
+
 
     @GetMapping("/logout")
     public String logout() {
