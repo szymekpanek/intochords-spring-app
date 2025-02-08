@@ -41,8 +41,8 @@ public class RestUserPanelController {
             Map<String, Object> gameStatsMap = new HashMap<>();
             gameStatsMap.put("gameStatsId", gs.getGameStatsId());
             gameStatsMap.put("gameId", gs.getGame().getGameId());
-            gameStatsMap.put("gameName", gs.getGame().getGameName().name()); // Nazwa gry jako String
-            gameStatsMap.put("gameDate", gs.getGameDate().toString()); // Konwersja LocalDateTime na String
+            gameStatsMap.put("gameName", gs.getGame().getGameName().name());
+            gameStatsMap.put("gameDate", gs.getGameDate().toString());
             gameStatsMap.put("correctAnswer", gs.getCorrectAnswer());
             gameStatsMap.put("incorrectAnswer", gs.getIncorrectAnswer());
             return gameStatsMap;

@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.wszib.edu.pl.intochordsspringapp.dao.ClassDAO;
-import pl.wszib.edu.pl.intochordsspringapp.dao.GameStatsDAO;
 import pl.wszib.edu.pl.intochordsspringapp.dao.UserClassDAO;
 import pl.wszib.edu.pl.intochordsspringapp.dao.UserDAO;
 import pl.wszib.edu.pl.intochordsspringapp.model.dbo.*;
@@ -29,9 +28,6 @@ public class RestClassController {
 
     @Autowired
     private UserClassDAO userClassDAO;
-
-    @Autowired
-    private GameStatsDAO gameStatsDAO;
 
     @Autowired
     private ClassGameStatsService classGameStatsService;
@@ -100,11 +96,10 @@ public class RestClassController {
 
             // Pobieranie i konwersja studentów
             Object studentsObj = payload.get("students");
-            if (!(studentsObj instanceof List<?>)) {
+            if (!(studentsObj instanceof List<?> rawStudentIds)) {
                 return ResponseEntity.badRequest().body("Invalid student list format.");
             }
 
-            List<?> rawStudentIds = (List<?>) studentsObj;
             List<Integer> studentIds = rawStudentIds.stream()
                     .filter(item -> item instanceof Number)
                     .map(item -> ((Number) item).intValue())
@@ -167,47 +162,6 @@ public class RestClassController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding students: " + e.getMessage());
         }
     }
-
-
-
-
-
-
-//    @GetMapping("/get-teacher-class")
-//    public ResponseEntity<Map<String, Object>> getTeacherClass(HttpSession session) {
-//        User teacher = (User) session.getAttribute(SessionConstants.USER_KEY);
-//
-//        if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
-//            System.out.println("🔴 Błąd: Użytkownik niezalogowany lub nie jest nauczycielem.");
-//            return ResponseEntity.status(403).build();
-//        }
-//
-//        System.out.println("🟢 Użytkownik nauczyciel: " + teacher.getUserId());
-//
-//        Optional<TClass> existingClass = classDAO.findByCreator(teacher);
-//
-//        if (existingClass.isEmpty()) {
-//            System.out.println("🔴 Brak klasy dla nauczyciela ID: " + teacher.getUserId());
-//            return ResponseEntity.ok(Collections.singletonMap("className", null));
-//        }
-//
-//        TClass tClass = existingClass.get();
-//        System.out.println("🟢 Znaleziono klasę: " + tClass.getClassName());
-//
-//        List<Map<String, String>> students = tClass.getUsers().stream()
-//                .map(userClass -> Map.of(
-//                        "name", userClass.getUser().getName(),
-//                        "surname", userClass.getUser().getSurname()
-//                ))
-//                .toList();
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("classId", tClass.getClassId());
-//        response.put("className", tClass.getClassName());
-//        response.put("students", students);
-//
-//        return ResponseEntity.ok(response);
-//    }
 
     @GetMapping("/get-teacher-class")
     public ResponseEntity<Map<String, Object>> getTeacherClass(HttpSession session) {
@@ -334,10 +288,4 @@ public class RestClassController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing student: " + e.getMessage());
         }
     }
-
-
-
 }
-
-
-
