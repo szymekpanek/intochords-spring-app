@@ -9,8 +9,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "t_class")
 public class TClass {
@@ -33,6 +32,38 @@ public class TClass {
         this.classId = classId;
         this.className = className;
         this.creator = creator;
+        this.users = users;
+    }
+
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public List<UserClass> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserClass> users) {
         this.users = users;
     }
 

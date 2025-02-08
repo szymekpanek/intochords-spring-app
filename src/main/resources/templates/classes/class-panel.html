@@ -6,7 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
     <script src="/script/classes/class-panel.js" defer></script>
-
+    <script src="/script/classes/upload/teacher-files.js" defer></script> <!-- Nowy skrypt -->
 </head>
 <body class="bg-gray-100">
 
@@ -43,31 +43,42 @@
                     <tbody id="game-stats-body" class="text-gray-600 text-sm">
                     </tbody>
                 </table>
-                <p id="no-data-message" class="text-gray-500 p-4 text-center hidden">Brak statystyk gier dla tej
-                    klasy.</p>
+                <p id="no-data-message" class="text-gray-500 p-4 text-center hidden">Brak statystyk gier dla tej klasy.</p>
             </div>
-
-            <div class="mt-4 flex gap-4">
-                <a id="add-students-button" th:href="@{/class-panel/add-students(classId=${classId})}"
-                   class="flex-1 bg-green-500 text-white py-3 rounded-lg text-center hover:bg-green-600 transition">
-                    ➕ Add Students
-                </a>
-
-                <a id="edit-class-button" th:href="@{/class-panel/edit-class(classId=${classId})}"
-                   class="flex-1 bg-yellow-500 text-white py-3 rounded-lg text-center hover:bg-yellow-600 transition">
-                    ✏️ Edit Class
-                </a>
-            </div>
-
-            <div class="mt-8">
-                <h2 class="text-2xl font-semibold text-gray-700 mb-3">Class Files</h2>
-                <a href="/class-panel/manage-files?classId=${classId}"
-                   class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-                    📂 Manage Class Files
-                </a>
-            </div>
-
         </div>
+
+        <!-- Dodawanie uczniów i edycja klasy -->
+        <div class="mt-4 flex gap-4">
+            <a id="add-students-button" th:href="@{/class-panel/add-students(classId=${classId})}"
+               class="flex-1 bg-green-500 text-white py-3 rounded-lg text-center hover:bg-green-600 transition">
+                ➕ Add Students
+            </a>
+
+            <a id="edit-class-button" th:href="@{/class-panel/edit-class(classId=${classId})}"
+               class="flex-1 bg-yellow-500 text-white py-3 rounded-lg text-center hover:bg-yellow-600 transition">
+                ✏️ Edit Class
+            </a>
+        </div>
+
+        <!-- Zarządzanie plikami -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">📂 Twoje pliki</h2>
+
+            <!-- Formularz przesyłania plików -->
+            <form id="upload-file-form" class="mb-6">
+                <input type="file" id="file-input" class="border p-2 rounded w-full">
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded mt-2 hover:bg-green-600">
+                    Upload File
+                </button>
+            </form>
+            <p id="upload-status" class="text-sm text-gray-600 mt-2"></p>
+
+            <!-- Lista plików -->
+            <ul id="teacher-files-list" class="border p-4 rounded space-y-2 bg-gray-50">
+                <li class="text-gray-500 text-center">Ładowanie plików...</li>
+            </ul>
+        </div>
+
     </section>
 </div>
 

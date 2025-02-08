@@ -25,10 +25,10 @@ public class UserClass{
     @JoinColumn(name = "class_id")
     private TClass TClass;
 
-    public UserClass(UserClassId id, User user, TClass aTClass) {
+    public UserClass(UserClassId id, User user, TClass tClass) {
         this.id = id;
         this.user = user;
-        this.TClass = aTClass;
+        this.TClass = tClass;
     }
 
     public UserClass() {}
