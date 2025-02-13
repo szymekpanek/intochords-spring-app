@@ -1,10 +1,11 @@
 package pl.wszib.edu.pl.intochordsspringapp.dto;
 
+import lombok.Getter;
 import pl.wszib.edu.pl.intochordsspringapp.model.dbo.TeacherFile;
 import pl.wszib.edu.pl.intochordsspringapp.model.dbo.User;
 
 import java.time.LocalDateTime;
-
+@Getter
 public class TeacherFileDTO {
     private int fileId;
     private String fileName;

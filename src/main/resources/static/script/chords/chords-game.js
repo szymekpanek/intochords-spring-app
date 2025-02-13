@@ -1,16 +1,46 @@
-const majorChordsMap = {
-    "C": ["E", "G"], "C#": ["E#", "G#"], "Db": ["F", "Ab"], "D": ["F#", "A"],
-    "D#": ["G", "A#"], "Eb": ["G", "Bb"], "E": ["G#", "B"], "F": ["A", "C"],
-    "F#": ["A#", "C#"], "Gb": ["Bb", "Db"], "G": ["B", "D"], "G#": ["B#", "D#"],
-    "Ab": ["C", "Eb"], "A": ["C#", "E"], "A#": ["D", "F"], "Bb": ["D", "F"],
-    "B": ["D#", "F#"]
-};
+// ✅ Używamy Map() zamiast zwykłego obiektu
+const majorChordsMap = new Map([
+    ["C", ["E", "G"]],
+    ["C#", ["E#", "G#"]],
+    ["DB", ["F", "AB"]],
+    ["D", ["F#", "A"]],
+    ["D#", ["G", "A#"]],
+    ["EB", ["G", "BB"]],
+    ["E", ["G#", "B"]],
+    ["F", ["A", "C"]],
+    ["F#", ["A#", "C#"]],
+    ["GB", ["BB", "DB"]],
+    ["G", ["B", "D"]],
+    ["G#", ["B#", "D#"]],
+    ["AB", ["C", "EB"]],
+    ["A", ["C#", "E"]],
+    ["A#", ["D", "F"]],
+    ["BB", ["D", "F"]],
+    ["B", ["EB", "GB"]],
+    ["B", ["DB", "GB"]],
+    ["D", ["GB", "A"]],
+    ["B", ["D#", "F#"]]
+]);
+
+/**
+ * ✅ Funkcja zwracająca poprawny akord dla danego dźwięku
+ * Jeśli dźwięk nie istnieje w Map(), zwracamy domyślny akord [X, X]
+ */
+function getChord(rootNote) {
+    if (majorChordsMap.has(rootNote)) {
+        return majorChordsMap.get(rootNote);
+    } else {
+        console.warn(`⚠️ Akord dla ${rootNote} nie istnieje! Generujemy zastępczy.`);
+        return ["X", "X"]; // Zastępczy akord, jeśli go nie ma w mapie
+    }
+}
+
 
 const minorChordsMap = {
-    "C": ["Eb", "G"], "C#": ["E", "G#"], "Db": ["Fb", "Ab"], "D": ["F", "A"],
-    "D#": ["F#", "A#"], "Eb": ["Gb", "Bb"], "E": ["G", "B"], "F": ["Ab", "C"],
-    "F#": ["A", "C#"], "Gb": ["Bbb", "Db"], "G": ["Bb", "D"], "G#": ["B", "D#"],
-    "Ab": ["Cb", "Eb"], "A": ["C", "E"], "A#": ["C#", "F"], "Bb": ["Db", "F"],
+    "C": ["EB", "G"], "C#": ["E", "G#"], "DB": ["FB", "AB"], "D": ["F", "A"],
+    "D#": ["F#", "A#"], "EB": ["GB", "BB"], "E": ["G", "B"], "F": ["AB", "C"],
+    "F#": ["A", "C#"], "GB": ["BBB", "DB"], "G": ["BB", "D"], "G#": ["B", "D#"],
+    "AB": ["CB", "EB"], "A": ["C", "E"], "A#": ["C#", "F"], "BB": ["DB", "F"],
     "B": ["D", "F#"], "B#": ["D#", "F##"]
 };
 
@@ -31,8 +61,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("check-button").addEventListener("click", function () {
-        let { correctCount, incorrectCount } = checkAnswers(correctMatrix, isMajor);
-        sendGameResults(correctCount, incorrectCount); // Wysyłanie wyników do bazy
+        let results = checkAnswers(correctMatrix, isMajor);
+
+        if (results) {
+            let {correctCount, incorrectCount} = results;
+            sendGameResults(correctCount, incorrectCount);
+        } else {
+            console.error("❌ Błąd: checkAnswers zwróciło undefined!");
+        }
     });
 
     document.getElementById("next-chord-button").addEventListener("click", function () {
@@ -42,25 +78,53 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-/**
- * Generuje nową tablicę akordów
+/*
+ * Generuje tablicę akordów na podstawie jednego dźwięku na przekątnej
  */
 function generateChordsMatrix(isMajor) {
-    const notes = Object.keys(isMajor ? majorChordsMap : minorChordsMap);
-    let rootNote = notes[Math.floor(Math.random() * notes.length)];
+    console.log("🎹 Generowanie nowej tablicy akordów...");
+
+    const chordMap = isMajor ? majorChordsMap : minorChordsMap;
+    const notes = Array.from(chordMap.keys()); // Pobieramy dostępne klucze
+    let diagonalNote = notes[Math.floor(Math.random() * notes.length)];
+
     let matrix = [
-        [rootNote, "", ""],
-        ["", rootNote, ""],
-        ["", "", rootNote]
+        [diagonalNote, "", ""],
+        ["", diagonalNote, ""],
+        ["", "", diagonalNote]
     ];
+
+    console.log(`🎵 Wylosowany dźwięk na przekątnej: ${diagonalNote}`);
+
+    // Pobieramy akordy dla każdego indeksu
+    let chords = [
+        getChord(diagonalNote), // Akord dla indeksu 0
+        getChord(diagonalNote), // Akord dla indeksu 1
+        getChord(diagonalNote)  // Akord dla indeksu 2
+    ];
+
+    // Uzupełniamy macierz znalezionymi akordami
+    if (chords[0]) {
+        matrix[0][1] = chords[0][0];
+        matrix[0][2] = chords[0][1];
+    }
+    if (chords[1]) {
+        matrix[1][0] = chords[1][0];
+        matrix[1][2] = chords[1][1];
+    }
+    if (chords[2]) {
+        matrix[2][0] = chords[2][0];
+        matrix[2][1] = chords[2][1];
+    }
+
+    console.log("✅ Poprawnie wygenerowana tablica akordów:");
+    console.table(matrix);
 
     fillLockedCells(matrix);
     return matrix;
 }
 
-/**
- * Wypełnia pola po przekątnej i blokuje je
- */
+
 function fillLockedCells(matrix) {
     for (let i = 0; i < 3; i++) {
         let cell = document.getElementById(`cell-${i}-${i}`);
@@ -70,33 +134,36 @@ function fillLockedCells(matrix) {
     }
 }
 
-/**
- * Sprawdza odpowiedzi użytkownika i podświetla pola
- */
 function checkAnswers(correctMatrix, isMajor) {
-    let selectedMap = isMajor ? majorChordsMap : minorChordsMap;
-    let isFullyCorrect = true; // Cała tabela poprawna?
+    console.log("🔍 Sprawdzanie odpowiedzi...");
+
+    // Tworzymy macierz poprawnych wartości w uppercase
+    let normalizedCorrectMatrix = correctMatrix.map(row => row.map(note => note.toUpperCase()));
+
+    console.log("📌 Oczekiwana tablica akordów (uppercase):");
+    console.table(normalizedCorrectMatrix);
+
+    let isFullyCorrect = true; // Czy cała tablica jest poprawna?
 
     for (let i = 0; i < 3; i++) {
-        let rootNote = correctMatrix[i][i];
-        let correctValues = selectedMap[rootNote];
-
         for (let j = 0; j < 3; j++) {
-            if (i === j) continue;
+            if (i === j) continue; // Pomijamy przekątną (już jest wypełniona)
 
             let inputCell = document.getElementById(`cell-${i}-${j}`);
-            let userAnswer = inputCell.value.trim().toUpperCase(); // Normalizacja do wielkich liter
+            let userAnswer = inputCell.value.trim().toUpperCase(); // Użytkownik wpisuje uppercase
 
-            if (correctValues.includes(userAnswer)) {
+            if (normalizedCorrectMatrix[i][j] === userAnswer) {
                 inputCell.classList.add("correct");
                 inputCell.classList.remove("incorrect");
             } else {
                 inputCell.classList.add("incorrect");
                 inputCell.classList.remove("correct");
-                isFullyCorrect = false; // Co najmniej jedno pole błędne
+                isFullyCorrect = false;
             }
         }
     }
+
+    console.log("📝 Wynik końcowy: " + (isFullyCorrect ? "✅ Wszystko poprawne!" : "❌ Co najmniej jedno błędne"));
 
     let resultMessage = document.getElementById("result-message");
     resultMessage.textContent = isFullyCorrect ? "✅ Correct!" : "❌ Incorrect!";
@@ -104,9 +171,9 @@ function checkAnswers(correctMatrix, isMajor) {
 
     toggleNextButton(true);
 
-    sendGameResults(isFullyCorrect ? 1 : 0, isFullyCorrect ? 0 : 1); // Jeśli poprawne = 1, jeśli błędne = 1
+    // ✅ Wysyłamy do bazy: 1 poprawna odpowiedź lub 1 błędna odpowiedź
+    sendGameResults(isFullyCorrect ? 1 : 0, isFullyCorrect ? 0 : 1);
 }
-
 
 /**
  * Wysyła wyniki gry do serwera
@@ -114,7 +181,7 @@ function checkAnswers(correctMatrix, isMajor) {
 function sendGameResults(correct, incorrect) {
     fetch("/api/chords-game/save-game-results", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
         body: `correct=${correct}&incorrect=${incorrect}`
     });
 }
@@ -140,13 +207,7 @@ function resetGameBoard() {
 
     document.getElementById("result-message").classList.add("hidden");
 }
-/**
- * Aktualizuje oznaczenia kolumn w zależności od wybranego typu akordu
- */
-/**
- * Aktualizuje oznaczenia kolumn w zależności od wybranego typu akordu
- * oraz podświetla aktywny przycisk trybu akordu
- */
+
 function updateChordLabels(isMajor) {
     document.getElementById("label-1").textContent = "1"; // Pryma zawsze "1"
     document.getElementById("label-3").textContent = isMajor ? "3" : "3>"; // Tercja
