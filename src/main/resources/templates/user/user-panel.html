@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>User Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
     <script src="/script/charts/user-stats.js" defer></script>
@@ -11,51 +12,59 @@
 <body class="bg-gray-100">
 <div th:replace="~{/components/nav :: nav}"></div>
 
-<section class="flex flex-col justify-center items-center min-h-screen py-10 px-6">
-    <div class="bg-white p-10 rounded-2xl shadow-lg max-w-3xl w-full transform transition-transform duration-300">
+<!-- Spacing from navbar -->
+<section class="flex flex-col justify-center items-center min-h-screen py-20 px-6">
+    <div class="bg-white p-10 rounded-2xl shadow-2xl max-w-4xl w-full transform transition-transform duration-300">
         <div class="container mx-auto flex flex-col items-center">
-            <h1 class="text-4xl font-extrabold mb-6 text-gray-800 drop-shadow-md">User Panel</h1>
+            <h1 class="text-4xl font-extrabold mb-6 text-gray-800 drop-shadow-lg text-center">User Panel</h1>
 
-            <!-- Informacje o użytkowniku -->
-            <div class="mt-4 w-full">
-                <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md">
+            <!-- User Information -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                <div class="flex flex-col bg-gray-100 p-6 rounded-lg shadow-md">
                     <p class="text-lg font-semibold text-gray-700">Name:</p>
                     <p class="text-lg text-gray-900" th:text="${user.name}"></p>
                 </div>
-                <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mt-4">
+                <div class="flex flex-col bg-gray-100 p-6 rounded-lg shadow-md">
                     <p class="text-lg font-semibold text-gray-700">Surname:</p>
                     <p class="text-lg text-gray-900" th:text="${user.surname}"></p>
                 </div>
-                <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mt-4">
+                <div class="flex flex-col bg-gray-100 p-6 rounded-lg shadow-md">
                     <p class="text-lg font-semibold text-gray-700">Login:</p>
                     <p class="text-lg text-gray-900" th:text="${user.login}"></p>
                 </div>
-                <div class="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-md mt-4">
+                <div class="flex flex-col bg-gray-100 p-6 rounded-lg shadow-md">
                     <p class="text-lg font-semibold text-gray-700">Class:</p>
                     <p class="text-lg text-gray-900" th:text="${userClass}"></p>
                 </div>
-
             </div>
 
-            <!-- Statystyki dla "Interval Game" -->
-            <div class="mt-8 w-full">
-                <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">Interval Game Statistics</h2>
-                <div class="relative w-full h-80">
-                    <canvas id="intervalGameStatsChart"></canvas>
+            <!-- Statistics Section -->
+            <div class="mt-12 w-full">
+                <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Game Statistics</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Interval Game Stats -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-gray-700 text-center mb-4">Interval Game</h3>
+                        <div class="relative w-full h-80">
+                            <canvas id="intervalGameStatsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Chords Game Stats -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-semibold text-gray-700 text-center mb-4">Chords Game</h3>
+                        <div class="relative w-full h-80">
+                            <canvas id="chordsGameStatsChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Statystyki dla "Chords Game" -->
-            <div class="mt-8 w-full">
-                <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">Chords Game Statistics</h2>
-                <div class="relative w-full h-80">
-                    <canvas id="chordsGameStatsChart"></canvas>
-                </div>
-            </div>
-
-            <div class="mt-8 text-center">
-                <a href="/" class="py-3 px-6 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-                    Back to Home
+            <!-- Back to Home Button -->
+            <div class="mt-12 text-center">
+                <a href="/" class="py-3 px-6 bg-blue-500 text-white text-lg font-semibold rounded-lg hover:bg-blue-600 transition">
+                    ⬅ Back to Home
                 </a>
             </div>
         </div>
