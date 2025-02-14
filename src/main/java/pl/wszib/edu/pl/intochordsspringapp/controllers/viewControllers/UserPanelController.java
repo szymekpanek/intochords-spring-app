@@ -30,6 +30,14 @@ public class UserPanelController {
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
                 model.addAttribute("user", user);
+
+                // Dodajemy informację o klasie
+                if (user.getTClass() != null) {
+                    model.addAttribute("userClass", user.getTClass().getClassName());
+                } else {
+                    model.addAttribute("userClass", "Brak przypisanej klasy");
+                }
+
                 return "user/user-panel";
             } else {
                 return "redirect:/error";
@@ -38,4 +46,5 @@ public class UserPanelController {
             return "redirect:user/login";
         }
     }
+
 }

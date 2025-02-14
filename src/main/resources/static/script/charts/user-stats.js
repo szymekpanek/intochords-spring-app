@@ -4,6 +4,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const intervalChartCanvas = document.getElementById("intervalGameStatsChart").getContext("2d");
     const chordsChartCanvas = document.getElementById("chordsGameStatsChart").getContext("2d");
 
+    document.addEventListener("DOMContentLoaded", function () {
+        const apiUrl = "/api/user-panel";
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Error fetching data: " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.user) {
+                    document.getElementById("user-name").textContent = data.user.name;
+                    document.getElementById("user-surname").textContent = data.user.surname;
+                    document.getElementById("user-login").textContent = data.user.login;
+                    document.getElementById("user-class").textContent = data.user.className;
+                }
+            })
+            .catch(error => console.error("Błąd pobierania danych:", error));
+    });
+
     function fetchUserStats() {
         fetch(apiUrl)
             .then(response => {

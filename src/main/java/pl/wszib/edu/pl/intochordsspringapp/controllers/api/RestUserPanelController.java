@@ -27,7 +27,6 @@ public class RestUserPanelController {
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getUserGameStats(HttpSession session) {
-        // Pobieramy użytkownika z sesji
         User user = (User) session.getAttribute(SessionConstants.USER_KEY);
         if (user == null) {
             return ResponseEntity.status(401).build(); // Unauthorized
@@ -56,9 +55,17 @@ public class RestUserPanelController {
         userData.put("surname", user.getSurname());
         userData.put("login", user.getLogin());
 
+        // Dodanie nazwy klasy użytkownika
+        if (user.getTClass() != null) {
+            userData.put("className", user.getTClass().getClassName());
+        } else {
+            userData.put("className", "Brak przypisanej klasy");
+        }
+
         response.put("user", userData);
         response.put("gameStats", gameStatsList);
 
         return ResponseEntity.ok(response);
     }
+
 }
