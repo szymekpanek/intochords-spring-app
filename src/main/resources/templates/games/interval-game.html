@@ -5,6 +5,7 @@
     <title>Interval Game</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="/style/intervals-game-stylesheet.css" rel="stylesheet">
+    <script src="/script/components/popInstruction.js"></script>
     <script src="/script/interval/interval-game.js"></script>
 
 </head>
@@ -89,29 +90,6 @@
 </div>
 
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("info-modal");
-        const openModalButton = document.getElementById("open-modal");
-        const closeModalButton = document.getElementById("close-modal");
 
-        // Show modal when the button is clicked
-        openModalButton.addEventListener("click", function () {
-            modal.classList.remove("hidden");
-        });
-
-        // Hide modal when the close button is clicked
-        closeModalButton.addEventListener("click", function () {
-            modal.classList.add("hidden");
-        });
-
-        // Hide modal when clicking outside the modal content
-        modal.addEventListener("click", function (event) {
-            if (event.target === modal) {
-                modal.classList.add("hidden");
-            }
-        });
-    });
-</script>
 </body>
 </html>
