@@ -1,6 +1,8 @@
 package pl.wszib.edu.pl.intochordsspringapp.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.wszib.edu.pl.intochordsspringapp.dao.GameDAO;
 import pl.wszib.edu.pl.intochordsspringapp.dao.GameStatsDAO;
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-public class IntervalGameServices {
+public class GameServices {
 
     private final IntervalDB intervalDB;
     private final SoundDB soundDB;
@@ -26,7 +28,7 @@ public class IntervalGameServices {
     private final UserDAO userDAO;
 
     @Autowired
-    public IntervalGameServices(IntervalDB intervalDB, SoundDB soundDB, GameDAO gameDAO, GameStatsDAO gameStatsDAO, UserDAO userDAO) {
+    public GameServices(IntervalDB intervalDB, SoundDB soundDB, GameDAO gameDAO, GameStatsDAO gameStatsDAO, UserDAO userDAO) {
         this.intervalDB = intervalDB;
         this.soundDB = soundDB;
         this.gameDAO = gameDAO;
@@ -77,16 +79,40 @@ public class IntervalGameServices {
         return Collections.emptyMap();
     }
 
-    public void saveGameResults(User user, int correct, int incorrect) {
-        Game game = gameDAO.findByGameId(1);
+//    public void saveGameResults(User user, int correct, int incorrect) {
+//        Game game = gameDAO.findByGameId(1);
+//
+//        GameStats stats = new GameStats();
+//        stats.setUser(user);
+//        stats.setGame(game);
+//        stats.setGameDate(LocalDateTime.now());
+//        stats.setCorrectAnswer(correct);
+//        stats.setIncorrectAnswer(incorrect);
+//
+//        gameStatsDAO.save(stats);
+//    }
+
+    public ResponseEntity<String> saveGameResults(User user, int correct, int incorrect, int gameId) {
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+        }
+
+        Game game = gameDAO.findByGameId(gameId);
 
         GameStats stats = new GameStats();
         stats.setUser(user);
         stats.setGame(game);
         stats.setGameDate(LocalDateTime.now());
-        stats.setCorrectAnswer(correct);
-        stats.setIncorrectAnswer(incorrect);
+
+        if (correct > 0) {
+            stats.setCorrectAnswer(correct);
+            stats.setIncorrectAnswer(0);
+        } else {
+            stats.setCorrectAnswer(0);
+            stats.setIncorrectAnswer(incorrect);
+        }
 
         gameStatsDAO.save(stats);
+        return ResponseEntity.ok("Game results saved successfully");
     }
 }
