@@ -79,19 +79,7 @@ public class GameServices {
         return Collections.emptyMap();
     }
 
-//    public void saveGameResults(User user, int correct, int incorrect) {
-//        Game game = gameDAO.findByGameId(1);
 //
-//        GameStats stats = new GameStats();
-//        stats.setUser(user);
-//        stats.setGame(game);
-//        stats.setGameDate(LocalDateTime.now());
-//        stats.setCorrectAnswer(correct);
-//        stats.setIncorrectAnswer(incorrect);
-//
-//        gameStatsDAO.save(stats);
-//    }
-
     public ResponseEntity<String> saveGameResults(User user, int correct, int incorrect, int gameId) {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
