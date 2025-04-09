@@ -35,7 +35,7 @@ public class UserPanelController {
                 if (user.getTClass() != null) {
                     model.addAttribute("userClass", user.getTClass().getClassName());
                 } else {
-                    model.addAttribute("userClass", "Brak przypisanej klasy");
+                    model.addAttribute("userClass", "No class assigned");
                 }
 
                 return "user/user-panel";

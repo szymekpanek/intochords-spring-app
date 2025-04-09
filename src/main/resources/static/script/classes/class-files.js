@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (data.length === 0) {
-                fileList.innerHTML = '<li class="text-gray-500 text-center">Brak dostępnych plików.</li>';
+                fileList.innerHTML = '<li class="text-gray-500 text-center">No files available.</li>';
                 return;
             }
 
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <a href="${file.filePath}" 
                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
                            download>
-                            ⬇ Pobierz
+                            ⬇ Download
                         </a>
                     </div>
                 `;

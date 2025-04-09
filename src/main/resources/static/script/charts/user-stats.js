@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(data => {
                 if (!data.gameStats || data.gameStats.length === 0) {
-                    console.warn("Brak danych do wyświetlenia.");
+                    console.warn("No data to show");
                     displayNoDataMessage();
                 } else {
                     const intervalStats = data.gameStats.filter(stat => stat.gameId === 1);
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
             })
-            .catch(error => console.error("Błąd pobierania danych:", error));
+            .catch(error => console.error("Data download error:", error));
     }
 
     function processAndGenerateChart(gameStats, canvas, gameTitle) {
@@ -105,11 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 maintainAspectRatio: false,
                 scales: {
                     x: {
-                        title: { display: true, text: 'Data gry' },
+                        title: { display: true, text: 'Game date' },
                         grid: { display: false }
                     },
                     y: {
-                        title: { display: true, text: 'Liczba odpowiedzi' },
+                        title: { display: true, text: 'Number of answers' },
                         beginAtZero: true
                     }
                 }
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function displayNoDataMessage(canvasId) {
         document.getElementById(canvasId).parentElement.innerHTML =
-            '<p class="text-center text-gray-500 font-semibold">Brak danych do wyświetlenia.</p>';
+            '<p class="text-center text-gray-500 font-semibold">No data to display.</p>';
     }
 
     fetchUserStats();

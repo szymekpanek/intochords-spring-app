@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface GameStatsDAO extends JpaRepository<GameStats, Integer> {
     List<GameStats> findByUser(User student);
-    List<GameStats> findByUser_UserId(Integer userId);
 
 }

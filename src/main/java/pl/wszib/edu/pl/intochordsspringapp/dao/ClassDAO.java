@@ -11,5 +11,6 @@ public interface ClassDAO extends JpaRepository<TClass, Integer> {
     Optional<TClass> findByClassName(String className);
 
     Optional<TClass> findByCreator(User teacher);
+
 }
 

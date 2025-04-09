@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDAO extends CrudRepository<User, Integer> {
-    User findByUserId(Integer user_id);
 
     Optional<User> findByLogin(String login);
 

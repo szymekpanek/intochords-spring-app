@@ -8,6 +8,4 @@ import pl.wszib.edu.pl.intochordsspringapp.model.dbo.UserClassId;
 import java.util.Optional;
 
 public interface UserClassDAO extends JpaRepository<UserClass, UserClassId> {
-
-    Optional<UserClass> findByUser(User student);
 }

@@ -1,34 +1,40 @@
-<nav class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg p-4 fixed w-full z-10">
-    <div class="container mx-auto px-4 flex justify-between items-center">
+<nav class="bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg shadow-lg p-4 fixed w-full z-10 rounded-b-lg">
+    <div class="container mx-auto flex justify-between items-center px-6">
         <div class="text-2xl font-bold text-white">
             <a href="/">IntoChords</a>
         </div>
-        <div class="space-x-4">
-            <a href="/" class="text-white hover:text-blue-700">Main Page</a>
-            <a href="/chords-game" class="text-white hover:text-blue-700">Chords Game</a>
-            <a href="interval-game" class="text-white hover:text-blue-700">Interval Game</a>
-            <a href="theory" class="text-white hover:text-blue-700">Theory</a>
-            <a href="/user-panel" th:if="${session.user != null}" class="text-white hover:text-blue-700">User Panel</a>
-            <a href="/login" th:if="${session.user == null}" class="text-white hover:text-blue-700">Log in</a>
-            <a href="/logout" th:if="${session.user != null}" class="text-white hover:text-blue-700">Log out</a>
+
+        <!-- Linki nawigacyjne -->
+        <div class="flex space-x-8">
+            <a href="/" class="text-white text-lg font-medium hover:text-blue-500 transition">Main Page</a>
+            <a href="/chords-game" class="text-white text-lg font-medium hover:text-blue-500 transition">Chords Game</a>
+            <a href="interval-game" class="text-white text-lg font-medium hover:text-blue-500 transition">Interval Game</a>
+            <a href="theory" class="text-white text-lg font-medium hover:text-blue-500 transition">Theory</a>
+
+            <a href="/user-panel" th:if="${session.user != null}" class="text-white text-lg font-medium hover:text-blue-500 transition">User Panel</a>
+            <a href="/login" th:if="${session.user == null}" class="text-white text-lg font-medium hover:text-blue-500 transition">Log in</a>
+            <a href="/logout" th:if="${session.user != null}" class="text-white text-lg font-medium hover:text-blue-500 transition">Log out</a>
+
             <a href="/admin-panel"
                th:if="${session.user?.role == T(pl.wszib.edu.pl.intochordsspringapp.model.dbo.User.Role).ADMIN}"
-               class="text-white hover:text-blue-700">Admin Panel</a>
+               class="text-white text-lg font-medium hover:text-blue-500 transition">
+                Admin Panel
+            </a>
+
             <a th:if="${session.user?.role == T(pl.wszib.edu.pl.intochordsspringapp.model.dbo.User.Role).TEACHER and session.user.tClass != null}"
                th:href="@{/class-panel/{classId}(classId=${session.user.tClass.classId})}"
-               class="text-white hover:text-blue-700">
+               class="text-white text-lg font-medium hover:text-blue-500 transition">
                 Class Panel
             </a>
 
             <a th:if="${session.user?.role == T(pl.wszib.edu.pl.intochordsspringapp.model.dbo.User.Role).TEACHER and session.user.tClass == null}"
                th:href="@{/class-panel/create}"
-               class="text-white hover:text-blue-700">
+               class="text-white text-lg font-medium hover:text-blue-500 transition">
                 Create Class
             </a>
 
-            <!-- ✅ Link "Files" widoczny tylko dla uczniów, którzy mają przypisaną klasę -->
-            <a th:if="${session.classId != null}" th:href="@{/files(classId=${session.classId})}"
-               class="text-white hover:text-blue-700">
+            <a th:if="${session.classId != null and session.user != null}" th:href="@{/files(classId=${session.classId})}"
+               class="text-white text-lg font-medium hover:text-blue-500 transition">
                 Files
             </a>
         </div>
